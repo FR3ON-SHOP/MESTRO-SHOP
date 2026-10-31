@@ -163,28 +163,20 @@
 <p style="color:#8b949e;font-size:12px;text-align:right;max-width:92%;margin:0 auto 15px auto;">الأرقام الرسمية المعتمدة للدعم الفني والوساطة</p>
 <div id="dynamicPhonesContainer" style="max-width:92%;margin:0 auto 20px auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;" dir="rtl"></div>
 </div>
-  <!-- قسم صفحات التواصل الاجتماعي بأيقونات دائرية احترافية -->
 <div id="socialSectionContainer">
     <div style="display:flex; justify-content:space-between; align-items:center; max-width:92%; margin:30px auto 12px auto; padding:0 5px;" dir="ltr">
         <span style="display:inline-block; background:#161b22; color:#8b949e; font-size:11px; font-weight:bold; padding:4px 12px; border-radius:20px; border:1px solid #30363d;" dir="rtl">روابط متجددة</span>
         <h3 style="color:#ffffff; font-size:20px; font-weight:bold; margin:0; text-align:right;" dir="rtl">صفحات التواصل</h3>
     </div>
-    
     <div style="max-width:92%; margin:0 auto 20px auto; display:flex; justify-content:center; gap:20px; padding:15px; background:#090c10; border:1px solid #1c2634; border-radius:20px;" dir="rtl">
-        
-        <!-- أيقونة الفيسبوك -->
         <a href="https://www.facebook.com/share/1KMmBPGxd1/" target="_blank" title="فيسبوك" style="width:60px; height:60px; background:#1877f2; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:26px; text-decoration:none; box-shadow:0 0 15px rgba(24,119,242,0.4); transition:transform 0.2s;">
             <i class="fa-brands fa-facebook-f"></i>
         </a>
-        
-        <!-- أيقونة الانستجرام -->
         <a href="https://www.instagram.com/maestro_gemng?xtok=MWY1ZzI3bHlwYTM4Mg==" target="_blank" title="انستجرام" style="width:60px; height:60px; background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:26px; text-decoration:none; box-shadow:0 0 15px rgba(214,36,159,0.4); transition:transform 0.2s;">
             <i class="fa-brands fa-instagram"></i>
         </a>
-        
     </div>
 </div>
-
 <div id="telegramSectionContainer">
 <div style="display:flex;justify-content:space-between;align-items:center;max-width:92%;margin:30px auto 12px auto;padding:0 5px;" dir="ltr"><div style="width:42px;height:42px;background:#0b1f24;border:1px solid rgba(0,245,247,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00f5f7;font-size:18px;"><i class="fa-brands fa-telegram"></i></div><h3 style="color:#ffffff;font-size:20px;font-weight:bold;margin:0;text-align:right;" dir="rtl">تواصل عبر تيليجرام</h3></div>
 <p style="color:#8b949e;font-size:12px;text-align:right;max-width:92%;margin:0 auto 15px auto;">الدعم الفني عبر تيليجرام</p>
@@ -293,6 +285,25 @@
     <div style="margin-bottom: 20px;" id="rechargeGameSelectorSection">
         <h3 style="font-size: 16px; margin-bottom: 10px;">اختر اللعبة</h3>
         <div class="games-grid" id="rechargeGamesGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;"></div>
+    </div>
+
+    <!-- ✅ قسم اختيار طريقة الشحن الجديد -->
+    <div style="margin-bottom: 20px;" id="rechargeMethodSelectorSection">
+        <h3 style="font-size: 16px; margin-bottom: 10px;">طريقة الشحن</h3>
+        <div style="display: flex; gap: 10px;">
+            <div onclick="selectRechargeMethod('id')" id="recharge_method_id"
+                 style="flex: 1; background: #161b22; border: 2px solid #00f5f7; border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s;">
+                <i class="fa-solid fa-id-card" style="font-size: 24px; color: #00f5f7; margin-bottom: 8px;"></i>
+                <div style="color: #fff; font-size: 13px; font-weight: bold;">عن طريق الآيدي</div>
+                <div style="color: #8b949e; font-size: 11px; margin-top: 5px;">أدخل Player ID</div>
+            </div>
+            <div onclick="selectRechargeMethod('account')" id="recharge_method_account"
+                 style="flex: 1; background: #161b22; border: 2px solid #30363d; border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s;">
+                <i class="fa-solid fa-user-shield" style="font-size: 24px; color: #f59e0b; margin-bottom: 8px;"></i>
+                <div style="color: #fff; font-size: 13px; font-weight: bold;">عن طريق الحساب</div>
+                <div style="color: #8b949e; font-size: 11px; margin-top: 5px;">بيانات الحساب</div>
+            </div>
+        </div>
     </div>
 
     <div style="margin-bottom: 20px;">
@@ -548,15 +559,22 @@
 <a href="#" id="floatingChannelBtn" class="floating-channel-btn" onclick="openChannelFromFloating(event)" title="قناة مايسترو"><i class="fa-solid fa-bullhorn"></i></a>
 
 <nav class="bottom-nav" id="bottomNav"></nav>
-
 <script>
-const ADMIN_EMAIL="mestro_shop@gmail.com",ADMIN_PASSWORD="mestro shopprmr123000";
-const DEFAULT_LOGO="https://i.ibb.co/6P6yKq5J/logo.png",DEFAULT_STORE_NAME="MAESTRO SHOP",DEFAULT_HERO_DESC="وجهة ألعاب بلمسة نيونية، سريعة، ومهيأة لعرض الروابط والتواصل مع مجتمع MAESTRO SHOP.",DEFAULT_WARNING_TEXT="احذر النصب هذه هي الروابط والحسابات الرسمية الوحيدة<br>الخاصة بمتجر MAESTRO SHOP الإدارة غير مسؤولة عن<br>أي تعامل يتم خارج الروابط والحسابات الرسمية.";
-const defaultChannels=[{name:"قناه شحن + عرض + مسابقات",type:"WHATSAPP",desc:"قناة شحن وعروض ومسابقات 🎮",icon:"fa-whatsapp",link:"https://whatsapp.com/channel/0029VbAu2bs5PO0yXbGtBD2S"}];
-const defaultPhones=[{phone:"01032329206",label:"رقم الدعم",link:"https://wa.me/201032329206"}];
-const defaultTelegram={username:"",link:""};
+// ═══════════════════════════════════════════════════
+// البيانات الافتراضية
+// ═══════════════════════════════════════════════════
+const ADMIN_EMAIL = "mestro_shop@gmail.com";
+const ADMIN_PASSWORD = "mestro shopprmr123000";
+const DEFAULT_LOGO = "https://i.ibb.co/6P6yKq5J/logo.png";
+const DEFAULT_STORE_NAME = "MAESTRO SHOP";
+const DEFAULT_HERO_DESC = "وجهة ألعاب بلمسة نيونية، سريعة، ومهيأة لعرض الروابط والتواصل مع مجتمع MAESTRO SHOP.";
+const DEFAULT_WARNING_TEXT = "احذر النصب هذه هي الروابط والحسابات الرسمية الوحيدة<br>الخاصة بمتجر MAESTRO SHOP الإدارة غير مسؤولة عن<br>أي تعامل يتم خارج الروابط والحسابات الرسمية.";
 
+const defaultChannels = [{ name: "قناه شحن + عرض + مسابقات", type: "WHATSAPP", desc: "قناة شحن وعروض ومسابقات 🎮", icon: "fa-whatsapp", link: "https://whatsapp.com/channel/0029VbAu2bs5PO0yXbGtBD2S" }];
+const defaultPhones = [{ phone: "01032329206", label: "رقم الدعم", link: "https://wa.me/201032329206" }];
+const defaultTelegram = { username: "", link: "" };
 const defaultColors = { primary: '#00f5f7', bg: '#000000', secondary: '#0d0f12' };
+
 const defaultGamesList = [
     { name: 'فري فاير', img: 'https://i.ibb.co/cSNRpBPJ/image-1.jpg', type: 'active', key: 'freefire' },
     { name: 'ببجي موبايل', img: 'https://i.ibb.co/v4666dh2/image-2.jpg', type: 'active', key: 'pubg' },
@@ -607,6 +625,9 @@ const defaultPackages = {
     ]
 };
 
+// ═══════════════════════════════════════════════════
+// الحالة العامة
+// ═══════════════════════════════════════════════════
 let currentLogo = DEFAULT_LOGO;
 let currentStoreName = DEFAULT_STORE_NAME;
 let currentHeroDesc = DEFAULT_HERO_DESC;
@@ -619,21 +640,33 @@ let siteGames = JSON.parse(JSON.stringify(defaultGamesList));
 let siteApps = JSON.parse(JSON.stringify(defaultAppsList));
 let sitePackages = JSON.parse(JSON.stringify(defaultPackages));
 
-let isLoggedIn=!1,loggedInEmail="",currentUser={name:"زائر MAESTRO SHOP",email:"visitor@medo.com",phone:""},selectedSingleImage="",activeCountryTarget='ad',adminActiveChatKey="",currentActivePostIndex=null;
+let isLoggedIn = false, loggedInEmail = "";
+let currentUser = { name: "زائر MAESTRO SHOP", email: "visitor@medo.com", phone: "" };
+let selectedSingleImage = "", activeCountryTarget = 'ad', adminActiveChatKey = "", currentActivePostIndex = null;
 let rechargeSelectedGameKey = 'freefire';
 let rechargeSelectedPackage = null;
 let currentCheckoutPayment = null;
 let checkoutTransferImageBase64 = "";
+let rechargeMethod = 'id'; // ✅ طريقة الشحن المختارة
 
-// Firebase Sync Function (Real-time Updates)
+// ═══════════════════════════════════════════════════
+// ✅ دالة اختيار طريقة الشحن (في صفحة الشحن)
+// ═══════════════════════════════════════════════════
+function selectRechargeMethod(method) {
+    rechargeMethod = method;
+    const idEl = document.getElementById('recharge_method_id');
+    const accEl = document.getElementById('recharge_method_account');
+    if (idEl) idEl.style.borderColor = method === 'id' ? '#00f5f7' : '#30363d';
+    if (accEl) accEl.style.borderColor = method === 'account' ? '#f59e0b' : '#30363d';
+}
+
+// ═══════════════════════════════════════════════════
+// Firebase Sync
+// ═══════════════════════════════════════════════════
 function initFirebaseSync() {
-    if (!window.fsDB) {
-        setTimeout(initFirebaseSync, 500);
-        return;
-    }
+    if (!window.fsDB) { setTimeout(initFirebaseSync, 500); return; }
     const docRef = window.fsDoc(window.fsDB, "settings", "siteData");
-    
-    window.fsOnSnapshot(docRef, 
+    window.fsOnSnapshot(docRef,
         (docSnap) => {
             console.log("🔥 Firebase sync OK");
             if (docSnap.exists()) {
@@ -649,7 +682,7 @@ function initFirebaseSync() {
                 if (data.games) siteGames = data.games;
                 if (data.apps) siteApps = data.apps;
                 if (data.packages) sitePackages = data.packages;
-                
+
                 applySiteColors();
                 updateSiteTextsUI();
                 renderDynamicStore();
@@ -657,35 +690,34 @@ function initFirebaseSync() {
                 if (typeof renderRechargeGames === 'function') renderRechargeGames();
                 if (typeof renderRechargePackages === 'function') renderRechargePackages();
                 if (isAdmin() && typeof setupAdminPanel === 'function') setupAdminPanel();
-                
             } else {
                 window.fsSetDoc(docRef, {
-                    logo: currentLogo, storeName: currentStoreName, 
+                    logo: currentLogo, storeName: currentStoreName,
                     heroDesc: currentHeroDesc, warningText: currentWarningText,
-                    channels: siteChannels, phones: sitePhones, telegram: siteTelegram, 
+                    channels: siteChannels, phones: sitePhones, telegram: siteTelegram,
                     colors: siteColors, games: siteGames, apps: siteApps, packages: sitePackages
-                }, { merge: true })
-                .catch(e => console.error("Firebase Seed Error:", e));
+                }, { merge: true }).catch(e => console.error("Firebase Seed Error:", e));
             }
         },
-        (error) => {
-            console.error("❌ Firebase Sync Error:", error.code, error.message);
-        }
+        (error) => console.error("❌ Firebase Sync Error:", error.code, error.message)
     );
 }
-  function applySiteColors() {
+
+function applySiteColors() {
     document.documentElement.style.setProperty('--site-primary', siteColors.primary);
     document.documentElement.style.setProperty('--site-bg', siteColors.bg);
     document.documentElement.style.setProperty('--site-secondary', siteColors.secondary);
     document.body.style.backgroundColor = siteColors.bg;
 }
 
+// ═══════════════════════════════════════════════════
+// عرض المتجر (الألعاب + التطبيقات)
+// ═══════════════════════════════════════════════════
 function renderDynamicStore() {
     const mainGrid = document.getElementById('dynamicGamesGrid');
     const moreGrid = document.getElementById('dynamicMoreGamesGrid');
     const appsGrid = document.getElementById('dynamicAppsGrid');
-    if(!mainGrid || !appsGrid || !moreGrid) return;
-
+    if (!mainGrid || !appsGrid || !moreGrid) return;
     mainGrid.innerHTML = '';
     moreGrid.innerHTML = '';
     appsGrid.innerHTML = '';
@@ -714,8 +746,25 @@ function renderDynamicStore() {
     });
 }
 
+function toggleMoreGames() {
+    const sec = document.getElementById('moreGamesSection');
+    const btn = document.getElementById('btnShowMore');
+    if (sec.style.display === 'none' || sec.style.display === '') {
+        sec.style.display = 'block';
+        btn.innerHTML = 'عرض أقل <i class="fa-solid fa-chevron-up" style="margin-right: 5px;"></i>';
+    } else {
+        sec.style.display = 'none';
+        btn.innerHTML = 'عرض المزيد من الألعاب <i class="fa-solid fa-chevron-down" style="margin-right: 5px;"></i>';
+        btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// ═══════════════════════════════════════════════════
+// إدارة الألعاب (Admin)
+// ═══════════════════════════════════════════════════
 function renderAdminGamesEditors() {
     const c = document.getElementById('adminGamesEditorContainer');
+    if (!c) return;
     c.innerHTML = '';
     siteGames.forEach((game, i) => {
         c.innerHTML += `
@@ -744,16 +793,17 @@ async function saveGamesChanges() {
             key: type === 'active' ? (document.getElementById(`gmKey_${i}`).value.trim() || 'freefire') : undefined
         };
     });
-    
-    if (window.fsDB) {
-        await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { games: siteGames }, { merge: true });
-    }
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { games: siteGames }, { merge: true });
     renderDynamicStore();
     showNotification('تم حفظ الألعاب بنجاح! 🎮');
 }
 
+// ═══════════════════════════════════════════════════
+// إدارة التطبيقات (Admin)
+// ═══════════════════════════════════════════════════
 function renderAdminAppsEditors() {
     const c = document.getElementById('adminAppsEditorContainer');
+    if (!c) return;
     c.innerHTML = '';
     siteApps.forEach((app, i) => {
         c.innerHTML += `
@@ -775,72 +825,66 @@ async function saveAppsChanges() {
         services: document.getElementById(`apServ_${i}`).value.trim() || 'خدمة',
         key: document.getElementById(`apKey_${i}`).value.trim() || 'app'
     }));
-    if (window.fsDB) {
-        await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { apps: siteApps }, { merge: true });
-    }
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { apps: siteApps }, { merge: true });
     renderDynamicStore();
     showNotification('تم حفظ التطبيقات بنجاح! 📱');
 }
 
+// ═══════════════════════════════════════════════════
+// إدارة الألوان
+// ═══════════════════════════════════════════════════
 async function saveSiteColors() {
     siteColors.primary = document.getElementById('adminColorPrimary').value;
     siteColors.bg = document.getElementById('adminColorBg').value;
     siteColors.secondary = document.getElementById('adminColorSecondary').value;
-    if (window.fsDB) {
-        await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { colors: siteColors }, { merge: true });
-    }
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { colors: siteColors }, { merge: true });
     applySiteColors();
     showNotification('تم حفظ الألوان بنجاح! 🎨');
 }
 
-function toggleMoreGames() {
-    const sec = document.getElementById('moreGamesSection');
-    const btn = document.getElementById('btnShowMore');
-    if (sec.style.display === 'none' || sec.style.display === '') {
-        sec.style.display = 'block';
-        btn.innerHTML = 'عرض أقل <i class="fa-solid fa-chevron-up" style="margin-right: 5px;"></i>';
-    } else {
-        sec.style.display = 'none';
-        btn.innerHTML = 'عرض المزيد من الألعاب <i class="fa-solid fa-chevron-down" style="margin-right: 5px;"></i>';
-        btn.scrollIntoView({behavior: 'smooth', block: 'center'});
-    }
-}
-
+// ═══════════════════════════════════════════════════
+// المودالات العامة
+// ═══════════════════════════════════════════════════
 function openSupportOptions() { document.getElementById('supportOptionsModal').classList.add('show'); }
-function closeSupportOptions(e) { if(e && e.target.id !== 'supportOptionsModal') return; document.getElementById('supportOptionsModal').classList.remove('show'); }
+function closeSupportOptions(e) { if (e && e.target.id !== 'supportOptionsModal') return; document.getElementById('supportOptionsModal').classList.remove('show'); }
 
 function toggleRechargeTheme() {
     const page = document.getElementById('rechargePage');
-    if (page.getAttribute('data-rc-theme') === 'dark') { page.setAttribute('data-rc-theme', 'light'); page.style.background = '#f8fafc'; page.style.color = '#1e293b'; }
-    else { page.setAttribute('data-rc-theme', 'dark'); page.style.background = '#0d1117'; page.style.color = '#fff'; }
+    if (page.getAttribute('data-rc-theme') === 'dark') {
+        page.setAttribute('data-rc-theme', 'light'); page.style.background = '#f8fafc'; page.style.color = '#1e293b';
+    } else {
+        page.setAttribute('data-rc-theme', 'dark'); page.style.background = '#0d1117'; page.style.color = '#fff';
+    }
 }
 
+// ═══════════════════════════════════════════════════
+// عرض الألعاب في صفحة الشحن
+// ═══════════════════════════════════════════════════
 function renderRechargeGames() {
     const grid = document.getElementById('rechargeGamesGrid');
-    if(!grid) return;
+    if (!grid) return;
     grid.innerHTML = '';
-    
     const allActiveItems = [
         ...siteGames.filter(g => g.type === 'active').map(g => ({ ...g, type: 'game' })),
         ...siteApps.map(a => ({ ...a, type: 'app', name: a.title }))
     ];
-
     allActiveItems.forEach(item => {
         const key = item.key;
         const name = item.name || item.title;
         const img = item.img;
-        
         grid.innerHTML += `<div class="game-card ${key === rechargeSelectedGameKey ? 'active' : ''}" onclick="selectRechargeGame('${name}','${key}',this)" style="background:#161b22; border:1px solid ${key === rechargeSelectedGameKey ? '#00f5f7' : '#30363d'}; border-radius:10px; padding:10px; text-align:center; cursor:pointer;">
             <img src="${img}" style="width:50px; height:50px; object-fit:cover; border-radius:8px; margin-bottom:5px;">
             <div style="font-size:12px; font-weight:bold; color:#fff;">${name}</div>
         </div>`;
     });
-    
-    document.getElementById('adminEditPackagesBtn').style.display = isAdmin() ? 'block' : 'none';
+    const editBtn = document.getElementById('adminEditPackagesBtn');
+    if (editBtn) editBtn.style.display = isAdmin() ? 'block' : 'none';
 }
 
+// ✅ لما يختار لعبة جديدة: نرجع الاختيار الافتراضي ID
 function selectRechargeGame(name, key, el) {
     rechargeSelectedGameKey = key;
+    selectRechargeMethod('id');
     renderRechargeGames();
     renderRechargePackages();
 }
@@ -848,16 +892,19 @@ function selectRechargeGame(name, key, el) {
 function openRechargeFromStore(itemName, key) {
     switchPage('rechargePage');
     rechargeSelectedGameKey = key;
-    renderRechargeGames(); 
+    selectRechargeMethod('id');
+    renderRechargeGames();
     renderRechargePackages();
 }
-
+  // ═══════════════════════════════════════════════════
+// عرض الباقات
+// ═══════════════════════════════════════════════════
 function renderRechargePackages() {
     const container = document.getElementById('rechargePackagesContainer');
     if (!container) return;
     container.innerHTML = '';
     const packages = sitePackages[rechargeSelectedGameKey] || [];
-    if(packages.length === 0) {
+    if (packages.length === 0) {
         container.innerHTML = '<div style="grid-column: span 2; text-align:center; color:#8b949e;">لا توجد باقات حالياً.</div>';
         return;
     }
@@ -878,12 +925,12 @@ function selectPackage(index, el) {
     rechargeSelectedPackage = sitePackages[rechargeSelectedGameKey][index];
     document.querySelectorAll('#rechargePackagesContainer .package-card').forEach(c => c.style.borderColor = '#30363d');
     el.style.borderColor = '#00f5f7';
-    
+
     document.getElementById('checkoutPackageName').innerText = rechargeSelectedPackage.name;
     document.getElementById('checkoutPackagePrice').innerText = rechargeSelectedPackage.price + " ج.م";
     document.getElementById('checkoutTotalPrice').innerText = rechargeSelectedPackage.price + " ج.م";
     document.getElementById('checkoutPlayerId').value = '';
-    
+
     currentCheckoutPayment = null;
     document.getElementById('pay_vodafone').style.borderColor = '#30363d';
     document.getElementById('pay_instapay').style.borderColor = '#30363d';
@@ -891,8 +938,9 @@ function selectPackage(index, el) {
     document.getElementById('checkoutSenderNumber').value = '';
     document.getElementById('checkoutImageName').innerHTML = 'اضغط لاختيار صورة الإثبات';
     checkoutTransferImageBase64 = "";
-    
-    selectCheckoutMethod('id');
+
+    // ✅ نستخدم الطريقة المختارة من صفحة الشحن
+    selectCheckoutMethod(rechargeMethod);
     document.getElementById('checkoutAccountData').value = '';
     document.getElementById('checkoutAccountPassword').value = '';
 
@@ -900,7 +948,7 @@ function selectPackage(index, el) {
 }
 
 function selectCheckoutMethod(method) {
-    if(method === 'id') {
+    if (method === 'id') {
         document.getElementById('method_id').style.borderColor = '#00f5f7';
         document.getElementById('method_account').style.borderColor = '#30363d';
         document.getElementById('checkoutIdContent').style.display = 'block';
@@ -918,15 +966,14 @@ function selectPayment(method) {
     document.getElementById('pay_vodafone').style.borderColor = '#30363d';
     document.getElementById('pay_instapay').style.borderColor = '#30363d';
     document.getElementById('pay_' + method).style.borderColor = '#00f5f7';
-    
     document.getElementById('transferDetailsSection').style.display = 'block';
 }
 
 function handleCheckoutImage(e) {
     const file = e.target.files[0];
-    if(file) {
+    if (file) {
         const reader = new FileReader();
-        reader.onload = function(ev) {
+        reader.onload = function (ev) {
             checkoutTransferImageBase64 = ev.target.result;
             document.getElementById('checkoutImageName').innerHTML = `<span style="color:#00ff00;">تم اختيار الصورة بنجاح ✅</span>`;
         };
@@ -937,85 +984,66 @@ function handleCheckoutImage(e) {
 function submitCheckoutOrder() {
     const methodId = document.getElementById('method_id').style.borderColor === 'rgb(0, 245, 247)';
     let orderDetails = "";
-    
-    if(methodId) {
+
+    if (methodId) {
         const playerId = document.getElementById('checkoutPlayerId').value.trim();
-        if(!playerId) { showNotification('يرجى إدخال الـ Player ID أولاً!', 'error'); return; }
+        if (!playerId) { showNotification('يرجى إدخال الـ Player ID أولاً!', 'error'); return; }
         orderDetails = `🆔 طريقة الشحن: عن طريق الآيدي\n🆔 الآي دي: ${playerId}`;
     } else {
         const platform = document.getElementById('checkoutPlatform').value;
         const accData = document.getElementById('checkoutAccountData').value.trim();
         const accPass = document.getElementById('checkoutAccountPassword').value.trim();
-                if(!accData) { showNotification('يرجى إدخال بيانات الحساب!', 'error'); return; }
-        if(!accPass) { showNotification('يرجى إدخال كلمة السر!', 'error'); return; }
-        
+        if (!accData) { showNotification('يرجى إدخال بيانات الحساب!', 'error'); return; }
+        if (!accPass) { showNotification('يرجى إدخال كلمة السر!', 'error'); return; }
         const platformNames = { 'google': 'جوجل', 'facebook': 'فيسبوك', 'twitter': 'تويتر' };
         orderDetails = `🔗 طريقة الشحن: عن طريق الحساب\n🌐 الربط: ${platformNames[platform]}\n📝 بيانات الحساب: ${accData}\n🔑 كلمة السر: ${accPass}`;
     }
-    
-    if(!currentCheckoutPayment) { showNotification('يرجى اختيار طريقة الدفع أولاً!', 'error'); return; }
+
+    if (!currentCheckoutPayment) { showNotification('يرجى اختيار طريقة الدفع أولاً!', 'error'); return; }
     const senderNumber = document.getElementById('checkoutSenderNumber').value.trim();
-    if(!senderNumber) { showNotification('يرجى إدخال الرقم الذي قمت بالتحويل منه!', 'error'); return; }
-    if(!checkoutTransferImageBase64) { showNotification('يرجى رفع صورة إثبات التحويل!', 'error'); return; }
-    
+    if (!senderNumber) { showNotification('يرجى إدخال الرقم الذي قمت بالتحويل منه!', 'error'); return; }
+    if (!checkoutTransferImageBase64) { showNotification('يرجى رفع صورة إثبات التحويل!', 'error'); return; }
+
     const itemName = siteGames.find(g => g.key === rechargeSelectedGameKey)?.name || siteApps.find(a => a.key === rechargeSelectedGameKey)?.title || rechargeSelectedGameKey;
     const payName = currentCheckoutPayment === 'vodafone' ? 'فودافون كاش' : 'إنستاباي';
-    
     const orderText = `طلب شحن جديد:\n🎮 المنتج: ${itemName}\n📦 الباقة: ${rechargeSelectedPackage.name}\n💰 السعر: ${rechargeSelectedPackage.price} ج.م\n\n${orderDetails}\n\n💳 طريقة الدفع: ${payName}\n📱 الرقم المحول منه: ${senderNumber}`;
-    
+
     const userKey = isLoggedIn ? loggedInEmail : "visitor_" + (localStorage.getItem('fr3on_visitor_id') || Math.random().toString(36).substring(7));
     const chatKey = 'fr3on_chat_' + userKey;
     let chatMessages = JSON.parse(localStorage.getItem(chatKey) || '[]');
-    
-    chatMessages.push({
-        sender: 'user',
-        text: orderText,
-        time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}),
-        type: 'text',
-        reaction: '',
-        isDeleted: false
-    });
-    
-    chatMessages.push({
-        sender: 'user',
-        text: checkoutTransferImageBase64,
-        time: new Date().toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'}),
-        type: 'img',
-        reaction: '',
-        isDeleted: false
-    });
-    
+
+    chatMessages.push({ sender: 'user', text: orderText, time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }), type: 'text', reaction: '', isDeleted: false });
+    chatMessages.push({ sender: 'user', text: checkoutTransferImageBase64, time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }), type: 'img', reaction: '', isDeleted: false });
     localStorage.setItem(chatKey, JSON.stringify(chatMessages));
-    
+
     let activeChats = JSON.parse(localStorage.getItem('fr3on_active_chats_list') || '[]');
-    if(!activeChats.includes(chatKey)) {
+    if (!activeChats.includes(chatKey)) {
         activeChats.push(chatKey);
         localStorage.setItem('fr3on_active_chats_list', JSON.stringify(activeChats));
     }
-    
+
     showNotification('تم إرسال الطلب للإدارة بنجاح! سيتم الرد عليك قريباً. ✅');
-    
     document.getElementById('checkoutSenderNumber').value = '';
     document.getElementById('checkoutImageName').innerHTML = 'اضغط لاختيار صورة الإثبات';
     checkoutTransferImageBase64 = "";
-    
     switchPage('messagesPage');
     openSupportChat();
 }
 
+// ═══════════════════════════════════════════════════
+// إدارة الباقات (Admin Modal)
+// ═══════════════════════════════════════════════════
 function openAdminPackagesModal() {
-    if(!isAdmin()) return;
+    if (!isAdmin()) return;
     const itemName = siteGames.find(g => g.key === rechargeSelectedGameKey)?.name || siteApps.find(a => a.key === rechargeSelectedGameKey)?.title || 'المنتج';
     document.getElementById('adminPackageGameTitle').innerText = itemName;
     renderAdminPackagesEditor();
     document.getElementById('adminPackagesModal').classList.add('show');
 }
-
 function closeAdminPackagesModal(e) {
-    if(e && e.target.id !== 'adminPackagesModal') return;
+    if (e && e.target.id !== 'adminPackagesModal') return;
     document.getElementById('adminPackagesModal').classList.remove('show');
 }
-
 function renderAdminPackagesEditor() {
     const c = document.getElementById('adminPackagesEditorContainer');
     c.innerHTML = '';
@@ -1029,37 +1057,25 @@ function renderAdminPackagesEditor() {
         </div>`;
     });
 }
-
 function addNewPackageItem() {
-    if(!sitePackages[rechargeSelectedGameKey]) sitePackages[rechargeSelectedGameKey] = [];
+    if (!sitePackages[rechargeSelectedGameKey]) sitePackages[rechargeSelectedGameKey] = [];
     sitePackages[rechargeSelectedGameKey].push({ name: 'باقة جديدة', price: 0, icon: 'https://cdn-icons-png.flaticon.com/512/822/822143.png' });
     renderAdminPackagesEditor();
 }
-
 function removePackageItem(i) {
     sitePackages[rechargeSelectedGameKey].splice(i, 1);
     renderAdminPackagesEditor();
 }
-
 async function saveAdminPackages() {
     const packages = sitePackages[rechargeSelectedGameKey];
-    if(!packages) return;
+    if (!packages) return;
     packages.forEach((pkg, i) => {
         pkg.name = document.getElementById(`pkgName_${i}`).value.trim();
-        pkg.price = Number(document.getElementById(`pkgPrice_${i}`).value.trim()) || 0; 
+        pkg.price = Number(document.getElementById(`pkgPrice_${i}`).value.trim()) || 0;
     });
-    
-    if (!window.fsDB) {
-        showNotification('❌ Firebase مش متصل، التعديل مش هيتحفظ', 'error');
-        return;
-    }
-    
+    if (!window.fsDB) { showNotification('❌ Firebase مش متصل، التعديل مش هيتحفظ', 'error'); return; }
     try {
-        await window.fsSetDoc(
-            window.fsDoc(window.fsDB, "settings", "siteData"),
-            { packages: sitePackages },
-            { merge: true }
-        );
+        await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { packages: sitePackages }, { merge: true });
         renderRechargePackages();
         closeAdminPackagesModal();
         showNotification('✅ تم الحفظ! هيظهر لكل الزباين فورًا 💎');
@@ -1069,116 +1085,611 @@ async function saveAdminPackages() {
     }
 }
 
-function isAdmin(){return isLoggedIn&&loggedInEmail===ADMIN_EMAIL}
-function showNotification(msg,type='success'){let t=document.createElement('div');t.className=`custom-toast ${type}`;let i=type==='success'?'<i class="fa-solid fa-circle-check"></i>':'<i class="fa-solid fa-circle-exclamation"></i>';t.innerHTML=`${i} <span>${msg}</span>`;document.body.appendChild(t);setTimeout(()=>{t.classList.add('show')},10);setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400)},3500)}
-function updateSiteTextsUI(){document.getElementById('heroDescText').innerHTML=currentHeroDesc;document.getElementById('homeWarningText').innerHTML=currentWarningText;document.getElementById('headerTitleText').innerText=currentStoreName;document.getElementById('heroTitleText').innerText=currentStoreName;document.querySelectorAll(".fr3on-logo").forEach(i=>{i.src=currentLogo})}
-function renderHomePageDynamicElements(){updateSiteTextsUI();const c=document.getElementById('dynamicChannelsContainer');if(c){c.innerHTML='';siteChannels.forEach(ch=>{c.innerHTML+=`<div style="background:#090c10;border:1px solid #1c2634;border-radius:20px;padding:18px 20px;margin:0 auto 15px auto;max-width:92%;box-shadow:0 4px 20px rgba(0,0,0,0.6);"><table style="width:100%;border-collapse:collapse;" dir="rtl"><tr><td style="text-align:right;vertical-align:middle;"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-start;"><div style="width:48px;height:48px;background:#0b1f24;border:1px solid rgba(0,245,247,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00f5f7;font-size:20px;flex-shrink:0;"><i class="fa-brands ${ch.icon||'fa-whatsapp'}"></i></div><div><h4 style="color:#ffffff;font-size:16px;font-weight:bold;margin:0 0 4px 0;">${ch.name}</h4><p style="color:#8b949e;font-size:11px;margin:0 0 4px 0;" dir="ltr">${ch.type}</p><p style="color:#7b8396;font-size:12px;margin:0;">${ch.desc}</p></div></div></td><td style="text-align:left;vertical-align:middle;width:110px;"><a href="${ch.link}" target="_blank" style="display:inline-block;background:transparent;color:#ffffff;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;border:1px solid rgba(255,255,255,0.25);text-decoration:none;text-align:center;white-space:nowrap;">افتح الرابط</a></td></tr></table></div>`})}
-const p=document.getElementById('phonesSectionContainer');if(sitePhones.length>0){if(p)p.style.display='block';const pc=document.getElementById('dynamicPhonesContainer');if(pc){pc.innerHTML='';sitePhones.forEach(ph=>{pc.innerHTML+=`<a href="${ph.link}" target="_blank" style="background:#090c10;border:1px solid #1c2634;border-radius:18px;padding:18px 12px;text-decoration:none;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="width:42px;height:42px;background:#0b1f24;border:1px solid rgba(0,245,247,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00f5f7;font-size:18px;margin-bottom:10px;"><i class="fa-brands fa-whatsapp"></i></div><span style="color:#ffffff;font-size:14px;font-weight:bold;margin-bottom:4px;direction:ltr;" dir="ltr">${ph.phone}</span><span style="color:#8b949e;font-size:11px;">${ph.label}</span></a>`})}}else{if(p)p.style.display='none'}
-const t=document.getElementById('telegramSectionContainer');if(siteTelegram.username){if(t)t.style.display='block';const tc=document.getElementById('dynamicTelegramContainer');if(tc){tc.innerHTML=`<a href="${siteTelegram.link}" target="_blank" style="background:#090c10;border:1px solid #1c2634;border-radius:18px;padding:20px;text-decoration:none;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="width:42px;height:42px;background:#0b1f24;border:1px solid rgba(0,245,247,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00f5f7;font-size:18px;margin-bottom:10px;"><i class="fa-brands fa-telegram"></i></div><span style="color:#ffffff;font-size:15px;font-weight:bold;margin-bottom:4px;direction:ltr;" dir="ltr">${siteTelegram.username}</span><span style="color:#8b949e;font-size:11px;">إدارة MAESTRO SHOP</span></a>`}}else{if(t)t.style.display='none'}}
+// ═══════════════════════════════════════════════════
+// أدوات مساعدة
+// ═══════════════════════════════════════════════════
+function isAdmin() { return isLoggedIn && loggedInEmail === ADMIN_EMAIL; }
 
-async function saveCustomLogoUrl(){let u=document.getElementById('customLogoInput').value.trim();if(u){currentLogo=u; if(window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { logo: currentLogo }, { merge: true }); updateSiteTextsUI();showNotification("تم تثبيت اللوجو بنجاح! ✨")}}
-async function saveStoreIdentity(){currentStoreName=document.getElementById('adminStoreNameInput').value.trim()||DEFAULT_STORE_NAME; if(window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { storeName: currentStoreName }, { merge: true }); updateSiteTextsUI();showNotification("تم حفظ اسم المتجر بنجاح! 👑")}
-async function saveSiteTexts(){currentHeroDesc=document.getElementById('adminHeroDescInput').value.trim()||DEFAULT_HERO_DESC;currentWarningText=document.getElementById('adminWarningInput').value.trim()||DEFAULT_WARNING_TEXT; if(window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { heroDesc: currentHeroDesc, warningText: currentWarningText }, { merge: true }); updateSiteTextsUI();showNotification("تم حفظ النصوص بنجاح! 📝")}
-async function saveTelegramChanges(){let u=document.getElementById('adminTelegramUser').value.trim(),l=document.getElementById('adminTelegramLink').value.trim();if(u&&!l){showNotification("أدخل رابط التيليجرام أيضاً!","error");return}siteTelegram={username:u,link:l}; if(window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { telegram: siteTelegram }, { merge: true }); renderHomePageDynamicElements();showNotification("تم حفظ بيانات التيليجرام بنجاح! ✈️")}
-function renderAdminChannelEditors(){const c=document.getElementById('adminChannelsEditorContainer');c.innerHTML='';if(siteChannels.length===0){c.innerHTML='<div style="color:#8b949e;font-size:12px;text-align:center;">لا توجد قنوات.</div>'}siteChannels.forEach((ch,i)=>{c.innerHTML+=`<div style="background:#02090c;border:1px solid #006b72;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;"><input type="text" id="chName_${i}" value="${ch.name}" placeholder="اسم القناة" class="admin-input" style="margin-bottom:0;"><input type="text" id="chLink_${i}" value="${ch.link}" placeholder="الرابط" class="admin-input" style="margin-bottom:0;" dir="ltr"><button onclick="removeChannelItem(${i})" class="admin-btn-danger" style="align-self:flex-start;">حذف</button></div>`})}
-function addNewChannelItem(){siteChannels.push({name:"قناة جديدة",type:"WHATSAPP",desc:"وصف",icon:"fa-whatsapp",link:""});renderAdminChannelEditors()}
-function removeChannelItem(i){siteChannels.splice(i,1);renderAdminChannelEditors()}
-async function saveChannelsChanges(){siteChannels=siteChannels.map((ch,i)=>({...ch,name:document.getElementById(`chName_${i}`).value.trim()||"قناة",link:document.getElementById(`chLink_${i}`).value.trim()||"#"})); if(window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { channels: siteChannels }, { merge: true }); renderHomePageDynamicElements();showNotification("تم حفظ القنوات بنجاح! 🔗")}
-function renderAdminPhoneEditors(){const c=document.getElementById('adminPhonesEditorContainer');c.innerHTML='';if(sitePhones.length===0){c.innerHTML='<div style="color:#8b949e;font-size:12px;text-align:center;">لا توجد أرقام.</div>'}sitePhones.forEach((p,i)=>{c.innerHTML+=`<div style="background:#02090c;border:1px solid #006b72;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;"><input type="text" id="phNum_${i}" value="${p.phone}" placeholder="الرقم" class="admin-input" style="margin-bottom:0;" dir="ltr"><input type="text" id="phLabel_${i}" value="${p.label}" placeholder="الاسم" class="admin-input" style="margin-bottom:0;"><input type="text" id="phLink_${i}" value="${p.link}" placeholder="الرابط" class="admin-input" style="margin-bottom:0;" dir="ltr"><button onclick="removePhoneItem(${i})" class="admin-btn-danger" style="align-self:flex-start;">حذف</button></div>`})}
-function addNewPhoneItem(){sitePhones.push({phone:"+20",label:"اسم الإدارة",link:"https://wa.me/"});renderAdminPhoneEditors()}
-function removePhoneItem(i){sitePhones.splice(i,1);renderAdminPhoneEditors()}
-async function savePhonesChanges(){sitePhones=sitePhones.map((p,i)=>({phone:document.getElementById(`phNum_${i}`).value.trim()||p.phone,label:document.getElementById(`phLabel_${i}`).value.trim()||p.label,link:document.getElementById(`phLink_${i}`).value.trim()||p.link})); if(window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { phones: sitePhones }, { merge: true }); renderHomePageDynamicElements();showNotification("تم حفظ الأرقام بنجاح! 📞")}
-function setupAdminPanel(){document.getElementById('customLogoInput').value=currentLogo;document.getElementById('adminStoreNameInput').value=currentStoreName;document.getElementById('adminHeroDescInput').value=currentHeroDesc;document.getElementById('adminWarningInput').value=currentWarningText;document.getElementById('adminTelegramUser').value=siteTelegram.username||"";document.getElementById('adminTelegramLink').value=siteTelegram.link||"";document.getElementById('adminColorPrimary').value=siteColors.primary;document.getElementById('adminColorBg').value=siteColors.bg;document.getElementById('adminColorSecondary').value=siteColors.secondary;renderAdminChannelEditors();renderAdminPhoneEditors();renderAdminGamesEditors();renderAdminAppsEditors();}
-
-function renderNav(){
-  const n=document.getElementById('bottomNav'),b=document.getElementById('homeAddAdBtn');
-  const storeBtn=`<a href="#" class="nav-item" id="navStore" onclick="switchPage('storePage',event);updateNav(this);"><i class="fa-solid fa-store"></i><span>المتجر</span></a>`;
-  const supportBtn=`<a href="#" class="nav-item" id="navSupport" onclick="openSupportOptions();event.preventDefault();"><i class="fa-solid fa-headset"></i><span>الدعم</span></a>`;
-  const messagesBtn=`<a href="#" class="nav-item" id="navAdminMessages" onclick="switchPage('messagesPage',event);updateNav(this);loadAdminMessagesRequests();" style="color:var(--cyan);"><i class="fa-solid fa-envelope"></i><span>الرسائل</span><span class="badge-dot" id="messagesBadgeDot" style="display:none; position:absolute; top:0; right:10px;"></span></a>`;
-  
-  if(!isLoggedIn){
-    if(b)b.style.display='none';
-    n.innerHTML=`<a href="#" class="nav-item active" id="navHome" onclick="switchPage('homePage',event);updateNav(this);"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>`+storeBtn+supportBtn+`<a href="#" class="nav-item" id="navLogin" onclick="switchPage('loginPage',event);updateNav(this);"><i class="fa-solid fa-right-to-bracket"></i><span>دخول</span></a><a href="#" class="nav-item" id="navRegister" onclick="switchPage('registerPage',event);updateNav(this);"><i class="fa-solid fa-user-plus"></i><span>حساب جديد</span></a>`;
-  }else if(isAdmin()){
-    if(b)b.style.display='flex';
-    n.innerHTML=`<a href="#" class="nav-item active" id="navHome" onclick="switchPage('homePage',event);updateNav(this);"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>`+storeBtn+supportBtn+messagesBtn+`<a href="#" class="nav-item" id="navProfile" onclick="switchPage('profilePage',event);updateNav(this);updateProfileDisplay();"><i class="fa-solid fa-user"></i><span>حسابي</span></a><a href="#" class="nav-item" id="navLogoutBtn" onclick="logout();event.preventDefault();" style="color:#ff4d4d;"><i class="fa-solid fa-right-from-bracket"></i><span>خروج</span></a>`;
-  }else{
-    if(b)b.style.display='flex';
-    n.innerHTML=`<a href="#" class="nav-item active" id="navHome" onclick="switchPage('homePage',event);updateNav(this);"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>`+storeBtn+supportBtn+`<a href="#" class="nav-item" id="navMessages" onclick="switchPage('messagesPage',event);updateNav(this);loadAdminMessagesRequests();"><i class="fa-solid fa-comment"></i><span>الرسائل</span></a><a href="#" class="nav-item" id="navProfile" onclick="switchPage('profilePage',event);updateNav(this);updateProfileDisplay();"><i class="fa-solid fa-user"></i><span>حسابي</span></a><a href="#" class="nav-item" id="navLogoutBtn" onclick="logout();event.preventDefault();" style="color:#ff4d4d;"><i class="fa-solid fa-right-from-bracket"></i><span>خروج</span></a>`;
-  }
-  updateAdminBadge()
+function showNotification(msg, type = 'success') {
+    let t = document.createElement('div');
+    t.className = `custom-toast ${type}`;
+    let i = type === 'success' ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-solid fa-circle-exclamation"></i>';
+    t.innerHTML = `${i} <span>${msg}</span>`;
+    document.body.appendChild(t);
+    setTimeout(() => { t.classList.add('show'); }, 10);
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
 }
-function updateProfileDisplay(){document.getElementById('profileUserName').innerText=currentUser.name;document.getElementById('profileUserEmail').innerText=isLoggedIn?currentUser.email:"";const a=JSON.parse(localStorage.getItem('fr3on_all_posts')||'[]').filter(p=>p.authorEmail===currentUser.email).length;const m=document.getElementById('masterAdminPanel'),f=document.getElementById('adminPostFormContainer');if(isAdmin()){if(m)m.style.display="block";if(f)f.style.display="block";setupAdminPanel()}else{if(m)m.style.display="none";if(f)f.style.display="none"}}
-function getUsers(){try{return JSON.parse(localStorage.getItem('fr3on_users')||'[]')}catch(e){return[]}}
-function startSession(u){isLoggedIn=!0;loggedInEmail=u.email;currentUser={name:u.name,email:u.email,phone:u.phone||""};localStorage.setItem('fr3on_session',u.email);renderNav();updateProfileDisplay();switchPage('homePage');showNotification(`أهلاً بك مجدداً يا ${u.name} 🌟`,'success')}
-function loginSuccess(){const e=document.getElementById('loginEmailInput').value.trim().toLowerCase(),p=document.getElementById('loginPasswordInput').value;if(!e||!p){showNotification("يرجى كتابة البريد وكلمة المرور أولاً!","error");return}if(e===ADMIN_EMAIL){if(p!==ADMIN_PASSWORD){showNotification("عذراً، بيانات الدخول غير صحيحة!","error");return}startSession({name:"إدارة MAESTRO SHOP",email:ADMIN_EMAIL})}else{const u=getUsers().find(x=>x.email===e&&x.password===p);if(!u){showNotification("عذراً، بيانات الدخول غير صحيحة!","error");return}startSession(u)}document.getElementById('loginEmailInput').value='';document.getElementById('loginPasswordInput').value=''}
-function registerSuccess(){const n=document.getElementById('regNameInput').value.trim(),p=document.getElementById('regPasswordInput').value,cp=document.getElementById('regConfirmPasswordInput').value,e=document.getElementById('regEmailInput').value.trim().toLowerCase();if(!n||!e){showNotification("يرجى إكمال جميع البيانات المطلوبة!","error");return}if(p.length<6){showNotification("كلمة المرور يجب أن تكون 6 أحرف على الأقل!","error");return}if(p!==cp){showNotification("كلمتا المرور غير متطابقتين!","error");return}if(e===ADMIN_EMAIL){showNotification("هذا البريد محجوز للإدارة!","error");return}const us=getUsers();if(us.some(x=>x.email===e)){showNotification("هذا الحساب موجود بالفعل، يمكنك تسجيل الدخول.","error");return}const u={name:n,email:e,password:p};us.push(u);localStorage.setItem('fr3on_users',JSON.stringify(us));document.getElementById('regNameInput').value='';document.getElementById('regPasswordInput').value='';document.getElementById('regConfirmPasswordInput').value='';startSession(u);showNotification("تم إنشاء حسابك بنجاح! أهلاً بك 🎉")}
-function logout(){isLoggedIn=!1;loggedInEmail="";currentUser={name:"زائر MAESTRO SHOP",email:"visitor@medo.com",phone:""};localStorage.removeItem('fr3on_session');renderNav();updateProfileDisplay();switchPage('homePage');showNotification("تم تسجيل الخروج بنجاح. نراك قريباً 👋")}
-function restoreSession(){const e=localStorage.getItem('fr3on_session');if(!e)return;if(e===ADMIN_EMAIL){startSession({name:"إدارة MAESTRO SHOP",email:ADMIN_EMAIL})}else{const u=getUsers().find(x=>x.email===e);if(u)startSession(u);else localStorage.removeItem('fr3on_session')}}
-function switchPage(id,ev){if(ev)ev.preventDefault();if(id==='addAdPage'&&!isLoggedIn){switchPage('loginPage');showNotification("يجب تسجيل الدخول أولاً لإضافة إعلان.","error");return}if(id==='profilePage'&&!isLoggedIn){switchPage('loginPage');return}document.querySelectorAll('.page-section').forEach(p=>p.classList.remove('active-page'));document.getElementById(id).classList.add('active-page');window.scrollTo({top:0,behavior:'smooth'});const fcb=document.getElementById('floatingChannelBtn');if(fcb)fcb.style.display=(id==='adminChannelPage'||id==='rechargePage'||id==='checkoutPage'||id==='storePage')?'none':'flex';if(id==='postsPage')loadAllPosts();else if(id==='messagesPage')loadAdminMessagesRequests();else if(id==='adminChannelPage')loadChannelPosts();else if(id==='profilePage')updateProfileDisplay();else if(id==='rechargePage'){renderRechargeGames();renderRechargePackages();}else if(id==='storePage')renderDynamicStore();}
-function openChannelFromFloating(e){if(e)e.preventDefault();document.querySelectorAll('.bottom-nav .nav-item').forEach(i=>i.classList.remove('active'));switchPage('adminChannelPage')}
-function updateNav(el){document.querySelectorAll('.bottom-nav .nav-item').forEach(i=>i.classList.remove('active'));el.classList.add('active')}
-function updateNavById(id){document.querySelectorAll('.bottom-nav .nav-item').forEach(i=>i.classList.remove('active'));const t=document.getElementById(id);if(t)t.classList.add('active')}
-const countriesList=[{name:"مصر",code:"+20",flag:"🇪🇬"},{name:"السعودية",code:"+966",flag:"🇸🇦"},{name:"الإمارات",code:"+971",flag:"🇦🇪"},{name:"العراق",code:"+964",flag:"🇮🇶"},{name:"الكويت",code:"+965",flag:"🇰🇼"},{name:"المغرب",code:"+212",flag:"🇲🇦"},{name:"الجزائر",code:"+213",flag:"🇩🇿"},{name:"الأردن",code:"+962",flag:"🇯🇴"},{name:"فلسطين",code:"+970",flag:"🇵🇸"},{name:"سوريا",code:"+963",flag:"🇸🇾"},{name:"لبنان",code:"+961",flag:"🇱🇧"},{name:"قطر",code:"+974",flag:"🇶🇦"},{name:"البحرين",code:"+973",flag:"🇧🇭"},{name:"عمان",code:"+968",flag:"🇴🇲"},{name:"اليمن",code:"+967",flag:"🇾🇪"},{name:"السودان",code:"+249",flag:"🇸🇩"},{name:"ليبيا",code:"+218",flag:"🇱🇾"},{name:"تونس",code:"+216",flag:"🇹🇳"},{name:"الولايات المتحدة",code:"+1",flag:"🇺🇸"},{name:"بريطانيا",code:"+44",flag:"🇬🇧"}];
-const currenciesList=[{name:"جنيه مصري",symbol:"EGP"},{name:"ريال سعودي",symbol:"SAR"},{name:"درهم إماراتي",symbol:"AED"},{name:"دولار أمريكي",symbol:"USD"},{name:"دينار كويتي",symbol:"KWD"},{name:"دينار أردني",symbol:"JOD"},{name:"ريال قطري",symbol:"QAR"},{name:"دينار عراقي",symbol:"IQD"},{name:"يورو",symbol:"EUR"}];
-function openCountryModal(t){activeCountryTarget=t;document.getElementById('countrySearchInput').value='';renderCountriesList(countriesList);document.getElementById('countryModal').classList.add('show')}
-function renderCountriesList(l){const c=document.getElementById('countriesListContainer');c.innerHTML='';l.forEach(i=>{c.innerHTML+=`<div class="category-option" onclick="selectCountry('${i.flag}','${i.code}','${i.name}')"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">${i.flag}</span><span>${i.name}</span></div><span style="color:var(--cyan);direction:ltr;" dir="ltr">${i.code}</span></div>`})}
-function filterCountries(){const q=document.getElementById('countrySearchInput').value.toLowerCase();renderCountriesList(countriesList.filter(c=>c.name.toLowerCase().includes(q)||c.code.toLowerCase().includes(q)))}
-function closeCountryModal(e){if(e.target.id==='countryModal'||e.type==='click')document.getElementById('countryModal').classList.remove('show')}
-function selectCountry(f,c,name){
-    if(activeCountryTarget==='ad'){
-        document.getElementById('adFlag').innerText=f;
-        document.getElementById('adCode').innerText=c;
-    } else if(activeCountryTarget==='store') {
-        document.getElementById('storeFlag').innerText=f;
-        document.getElementById('storeCountryName').innerText=name;
+
+// ═══════════════════════════════════════════════════
+// تحديث نصوص الموقع والروابط
+// ═══════════════════════════════════════════════════
+function updateSiteTextsUI() {
+    const el1 = document.getElementById('heroDescText'); if (el1) el1.innerHTML = currentHeroDesc;
+    const el2 = document.getElementById('homeWarningText'); if (el2) el2.innerHTML = currentWarningText;
+    const el3 = document.getElementById('headerTitleText'); if (el3) el3.innerText = currentStoreName;
+    const el4 = document.getElementById('heroTitleText'); if (el4) el4.innerText = currentStoreName;
+    document.querySelectorAll(".fr3on-logo").forEach(i => { i.src = currentLogo; });
+}
+
+function renderHomePageDynamicElements() {
+    updateSiteTextsUI();
+    const c = document.getElementById('dynamicChannelsContainer');
+    if (c) {
+        c.innerHTML = '';
+        siteChannels.forEach(ch => {
+            c.innerHTML += `<div style="background:#090c10;border:1px solid #1c2634;border-radius:20px;padding:18px 20px;margin:0 auto 15px auto;max-width:92%;box-shadow:0 4px 20px rgba(0,0,0,0.6);"><table style="width:100%;border-collapse:collapse;" dir="rtl"><tr><td style="text-align:right;vertical-align:middle;"><div style="display:flex;align-items:center;gap:12px;justify-content:flex-start;"><div style="width:48px;height:48px;background:#0b1f24;border:1px solid rgba(0,245,247,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00f5f7;font-size:20px;flex-shrink:0;"><i class="fa-brands ${ch.icon || 'fa-whatsapp'}"></i></div><div><h4 style="color:#ffffff;font-size:16px;font-weight:bold;margin:0 0 4px 0;">${ch.name}</h4><p style="color:#8b949e;font-size:11px;margin:0 0 4px 0;" dir="ltr">${ch.type}</p><p style="color:#7b8396;font-size:12px;margin:0;">${ch.desc}</p></div></div></td><td style="text-align:left;vertical-align:middle;width:110px;"><a href="${ch.link}" target="_blank" style="display:inline-block;background:transparent;color:#ffffff;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;border:1px solid rgba(255,255,255,0.25);text-decoration:none;text-align:center;white-space:nowrap;">افتح الرابط</a></td></tr></table></div>`;
+        });
+    }
+    const p = document.getElementById('phonesSectionContainer');
+    if (sitePhones.length > 0) {
+        if (p) p.style.display = 'block';
+        const pc = document.getElementById('dynamicPhonesContainer');
+        if (pc) {
+            pc.innerHTML = '';
+            sitePhones.forEach(ph => {
+                pc.innerHTML += `<a href="${ph.link}" target="_blank" style="background:#090c10;border:1px solid #1c2634;border-radius:18px;padding:18px 12px;text-decoration:none;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="width:42px;height:42px;background:#0b1f24;border:1px solid rgba(0,245,247,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00f5f7;font-size:18px;margin-bottom:10px;"><i class="fa-brands fa-whatsapp"></i></div><span style="color:#ffffff;font-size:14px;font-weight:bold;margin-bottom:4px;direction:ltr;" dir="ltr">${ph.phone}</span><span style="color:#8b949e;font-size:11px;">${ph.label}</span></a>`;
+            });
+        }
+    } else { if (p) p.style.display = 'none'; }
+    const t = document.getElementById('telegramSectionContainer');
+    if (siteTelegram.username) {
+        if (t) t.style.display = 'block';
+        const tc = document.getElementById('dynamicTelegramContainer');
+        if (tc) {
+            tc.innerHTML = `<a href="${siteTelegram.link}" target="_blank" style="background:#090c10;border:1px solid #1c2634;border-radius:18px;padding:20px;text-decoration:none;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="width:42px;height:42px;background:#0b1f24;border:1px solid rgba(0,245,247,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00f5f7;font-size:18px;margin-bottom:10px;"><i class="fa-brands fa-telegram"></i></div><span style="color:#ffffff;font-size:15px;font-weight:bold;margin-bottom:4px;direction:ltr;" dir="ltr">${siteTelegram.username}</span><span style="color:#8b949e;font-size:11px;">إدارة MAESTRO SHOP</span></a>`;
+        }
+    } else { if (t) t.style.display = 'none'; }
+}
+
+// ═══════════════════════════════════════════════════
+// حفظ الإعدادات (Admin)
+// ═══════════════════════════════════════════════════
+async function saveCustomLogoUrl() {
+    let u = document.getElementById('customLogoInput').value.trim();
+    if (u) {
+        currentLogo = u;
+        if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { logo: currentLogo }, { merge: true });
+        updateSiteTextsUI();
+        showNotification("تم تثبيت اللوجو بنجاح! ✨");
+    }
+}
+async function saveStoreIdentity() {
+    currentStoreName = document.getElementById('adminStoreNameInput').value.trim() || DEFAULT_STORE_NAME;
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { storeName: currentStoreName }, { merge: true });
+    updateSiteTextsUI();
+    showNotification("تم حفظ اسم المتجر بنجاح! 👑");
+}
+async function saveSiteTexts() {
+    currentHeroDesc = document.getElementById('adminHeroDescInput').value.trim() || DEFAULT_HERO_DESC;
+    currentWarningText = document.getElementById('adminWarningInput').value.trim() || DEFAULT_WARNING_TEXT;
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { heroDesc: currentHeroDesc, warningText: currentWarningText }, { merge: true });
+    updateSiteTextsUI();
+    showNotification("تم حفظ النصوص بنجاح! 📝");
+}
+async function saveTelegramChanges() {
+    let u = document.getElementById('adminTelegramUser').value.trim();
+    let l = document.getElementById('adminTelegramLink').value.trim();
+    if (u && !l) { showNotification("أدخل رابط التيليجرام أيضاً!", "error"); return; }
+    siteTelegram = { username: u, link: l };
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { telegram: siteTelegram }, { merge: true });
+    renderHomePageDynamicElements();
+    showNotification("تم حفظ بيانات التيليجرام بنجاح! ✈️");
+}
+
+// ═══════════════════════════════════════════════════
+// إدارة القنوات والأرقام
+// ═══════════════════════════════════════════════════
+function renderAdminChannelEditors() {
+    const c = document.getElementById('adminChannelsEditorContainer');
+    if (!c) return;
+    c.innerHTML = '';
+    if (siteChannels.length === 0) c.innerHTML = '<div style="color:#8b949e;font-size:12px;text-align:center;">لا توجد قنوات.</div>';
+    siteChannels.forEach((ch, i) => {
+        c.innerHTML += `<div style="background:#02090c;border:1px solid #006b72;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;"><input type="text" id="chName_${i}" value="${ch.name}" placeholder="اسم القناة" class="admin-input" style="margin-bottom:0;"><input type="text" id="chLink_${i}" value="${ch.link}" placeholder="الرابط" class="admin-input" style="margin-bottom:0;" dir="ltr"><button onclick="removeChannelItem(${i})" class="admin-btn-danger" style="align-self:flex-start;">حذف</button></div>`;
+    });
+}
+function addNewChannelItem() { siteChannels.push({ name: "قناة جديدة", type: "WHATSAPP", desc: "وصف", icon: "fa-whatsapp", link: "" }); renderAdminChannelEditors(); }
+function removeChannelItem(i) { siteChannels.splice(i, 1); renderAdminChannelEditors(); }
+async function saveChannelsChanges() {
+    siteChannels = siteChannels.map((ch, i) => ({ ...ch, name: document.getElementById(`chName_${i}`).value.trim() || "قناة", link: document.getElementById(`chLink_${i}`).value.trim() || "#" }));
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { channels: siteChannels }, { merge: true });
+    renderHomePageDynamicElements();
+    showNotification("تم حفظ القنوات بنجاح! 🔗");
+}
+function renderAdminPhoneEditors() {
+    const c = document.getElementById('adminPhonesEditorContainer');
+    if (!c) return;
+    c.innerHTML = '';
+    if (sitePhones.length === 0) c.innerHTML = '<div style="color:#8b949e;font-size:12px;text-align:center;">لا توجد أرقام.</div>';
+    sitePhones.forEach((p, i) => {
+        c.innerHTML += `<div style="background:#02090c;border:1px solid #006b72;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;"><input type="text" id="phNum_${i}" value="${p.phone}" placeholder="الرقم" class="admin-input" style="margin-bottom:0;" dir="ltr"><input type="text" id="phLabel_${i}" value="${p.label}" placeholder="الاسم" class="admin-input" style="margin-bottom:0;"><input type="text" id="phLink_${i}" value="${p.link}" placeholder="الرابط" class="admin-input" style="margin-bottom:0;" dir="ltr"><button onclick="removePhoneItem(${i})" class="admin-btn-danger" style="align-self:flex-start;">حذف</button></div>`;
+    });
+}
+function addNewPhoneItem() { sitePhones.push({ phone: "+20", label: "اسم الإدارة", link: "https://wa.me/" }); renderAdminPhoneEditors(); }
+function removePhoneItem(i) { sitePhones.splice(i, 1); renderAdminPhoneEditors(); }
+async function savePhonesChanges() {
+    sitePhones = sitePhones.map((p, i) => ({ phone: document.getElementById(`phNum_${i}`).value.trim() || p.phone, label: document.getElementById(`phLabel_${i}`).value.trim() || p.label, link: document.getElementById(`phLink_${i}`).value.trim() || p.link }));
+    if (window.fsDB) await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { phones: sitePhones }, { merge: true });
+    renderHomePageDynamicElements();
+    showNotification("تم حفظ الأرقام بنجاح! 📞");
+}
+
+function setupAdminPanel() {
+    const els = {
+        customLogoInput: currentLogo, adminStoreNameInput: currentStoreName,
+        adminHeroDescInput: currentHeroDesc, adminWarningInput: currentWarningText,
+        adminTelegramUser: siteTelegram.username || "", adminTelegramLink: siteTelegram.link || "",
+        adminColorPrimary: siteColors.primary, adminColorBg: siteColors.bg, adminColorSecondary: siteColors.secondary
+    };
+    for (const id in els) { const el = document.getElementById(id); if (el) el.value = els[id]; }
+    renderAdminChannelEditors();
+    renderAdminPhoneEditors();
+    renderAdminGamesEditors();
+    renderAdminAppsEditors();
+}
+
+// ═══════════════════════════════════════════════════
+// التنقل والناف بار
+// ═══════════════════════════════════════════════════
+function renderNav() {
+    const n = document.getElementById('bottomNav'), b = document.getElementById('homeAddAdBtn');
+    const storeBtn = `<a href="#" class="nav-item" id="navStore" onclick="switchPage('storePage',event);updateNav(this);"><i class="fa-solid fa-store"></i><span>المتجر</span></a>`;
+    const supportBtn = `<a href="#" class="nav-item" id="navSupport" onclick="openSupportOptions();event.preventDefault();"><i class="fa-solid fa-headset"></i><span>الدعم</span></a>`;
+    const messagesBtn = `<a href="#" class="nav-item" id="navAdminMessages" onclick="switchPage('messagesPage',event);updateNav(this);loadAdminMessagesRequests();" style="color:var(--cyan);"><i class="fa-solid fa-envelope"></i><span>الرسائل</span><span class="badge-dot" id="messagesBadgeDot" style="display:none; position:absolute; top:0; right:10px;"></span></a>`;
+
+    if (!isLoggedIn) {
+        if (b) b.style.display = 'none';
+        n.innerHTML = `<a href="#" class="nav-item active" id="navHome" onclick="switchPage('homePage',event);updateNav(this);"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>` + storeBtn + supportBtn + `<a href="#" class="nav-item" id="navLogin" onclick="switchPage('loginPage',event);updateNav(this);"><i class="fa-solid fa-right-to-bracket"></i><span>دخول</span></a><a href="#" class="nav-item" id="navRegister" onclick="switchPage('registerPage',event);updateNav(this);"><i class="fa-solid fa-user-plus"></i><span>حساب جديد</span></a>`;
+    } else if (isAdmin()) {
+        if (b) b.style.display = 'flex';
+        n.innerHTML = `<a href="#" class="nav-item active" id="navHome" onclick="switchPage('homePage',event);updateNav(this);"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>` + storeBtn + supportBtn + messagesBtn + `<a href="#" class="nav-item" id="navProfile" onclick="switchPage('profilePage',event);updateNav(this);updateProfileDisplay();"><i class="fa-solid fa-user"></i><span>حسابي</span></a><a href="#" class="nav-item" id="navLogoutBtn" onclick="logout();event.preventDefault();" style="color:#ff4d4d;"><i class="fa-solid fa-right-from-bracket"></i><span>خروج</span></a>`;
     } else {
-        document.getElementById('regFlag').innerText=f;
-        document.getElementById('regCode').innerText=c;
+        if (b) b.style.display = 'flex';
+        n.innerHTML = `<a href="#" class="nav-item active" id="navHome" onclick="switchPage('homePage',event);updateNav(this);"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>` + storeBtn + supportBtn + `<a href="#" class="nav-item" id="navMessages" onclick="switchPage('messagesPage',event);updateNav(this);loadAdminMessagesRequests();"><i class="fa-solid fa-comment"></i><span>الرسائل</span></a><a href="#" class="nav-item" id="navProfile" onclick="switchPage('profilePage',event);updateNav(this);updateProfileDisplay();"><i class="fa-solid fa-user"></i><span>حسابي</span></a><a href="#" class="nav-item" id="navLogoutBtn" onclick="logout();event.preventDefault();" style="color:#ff4d4d;"><i class="fa-solid fa-right-from-bracket"></i><span>خروج</span></a>`;
+    }
+    updateAdminBadge();
+}
+
+function updateProfileDisplay() {
+    document.getElementById('profileUserName').innerText = currentUser.name;
+    document.getElementById('profileUserEmail').innerText = isLoggedIn ? currentUser.email : "";
+    const m = document.getElementById('masterAdminPanel'), f = document.getElementById('adminPostFormContainer');
+    if (isAdmin()) {
+        if (m) m.style.display = "block";
+        if (f) f.style.display = "block";
+        setupAdminPanel();
+    } else {
+        if (m) m.style.display = "none";
+        if (f) f.style.display = "none";
+    }
+}
+
+// ═══════════════════════════════════════════════════
+// تسجيل الدخول / التسجيل / الخروج
+// ═══════════════════════════════════════════════════
+function getUsers() { try { return JSON.parse(localStorage.getItem('fr3on_users') || '[]'); } catch (e) { return []; } }
+
+function startSession(u) {
+    isLoggedIn = true; loggedInEmail = u.email;
+    currentUser = { name: u.name, email: u.email, phone: u.phone || "" };
+    localStorage.setItem('fr3on_session', u.email);
+    renderNav(); updateProfileDisplay(); switchPage('homePage');
+    showNotification(`أهلاً بك مجدداً يا ${u.name} 🌟`, 'success');
+}
+
+function loginSuccess() {
+    const e = document.getElementById('loginEmailInput').value.trim().toLowerCase();
+    const p = document.getElementById('loginPasswordInput').value;
+    if (!e || !p) { showNotification("يرجى كتابة البريد وكلمة المرور أولاً!", "error"); return; }
+    if (e === ADMIN_EMAIL) {
+        if (p !== ADMIN_PASSWORD) { showNotification("عذراً، بيانات الدخول غير صحيحة!", "error"); return; }
+        startSession({ name: "إدارة MAESTRO SHOP", email: ADMIN_EMAIL });
+    } else {
+        const u = getUsers().find(x => x.email === e && x.password === p);
+        if (!u) { showNotification("عذراً، بيانات الدخول غير صحيحة!", "error"); return; }
+        startSession(u);
+    }
+    document.getElementById('loginEmailInput').value = '';
+    document.getElementById('loginPasswordInput').value = '';
+}
+
+function registerSuccess() {
+    const n = document.getElementById('regNameInput').value.trim();
+    const p = document.getElementById('regPasswordInput').value;
+    const cp = document.getElementById('regConfirmPasswordInput').value;
+    const e = document.getElementById('regEmailInput').value.trim().toLowerCase();
+    if (!n || !e) { showNotification("يرجى إكمال جميع البيانات المطلوبة!", "error"); return; }
+    if (p.length < 6) { showNotification("كلمة المرور يجب أن تكون 6 أحرف على الأقل!", "error"); return; }
+    if (p !== cp) { showNotification("كلمتا المرور غير متطابقتين!", "error"); return; }
+    if (e === ADMIN_EMAIL) { showNotification("هذا البريد محجوز للإدارة!", "error"); return; }
+    const us = getUsers();
+    if (us.some(x => x.email === e)) { showNotification("هذا الحساب موجود بالفعل، يمكنك تسجيل الدخول.", "error"); return; }
+    const u = { name: n, email: e, password: p };
+    us.push(u);
+    localStorage.setItem('fr3on_users', JSON.stringify(us));
+    document.getElementById('regNameInput').value = '';
+    document.getElementById('regPasswordInput').value = '';
+    document.getElementById('regConfirmPasswordInput').value = '';
+    startSession(u);
+    showNotification("تم إنشاء حسابك بنجاح! أهلاً بك 🎉");
+}
+
+function logout() {
+    isLoggedIn = false; loggedInEmail = "";
+    currentUser = { name: "زائر MAESTRO SHOP", email: "visitor@medo.com", phone: "" };
+    localStorage.removeItem('fr3on_session');
+    renderNav(); updateProfileDisplay(); switchPage('homePage');
+    showNotification("تم تسجيل الخروج بنجاح. نراك قريباً 👋");
+}
+
+function restoreSession() {
+    const e = localStorage.getItem('fr3on_session');
+    if (!e) return;
+    if (e === ADMIN_EMAIL) { startSession({ name: "إدارة MAESTRO SHOP", email: ADMIN_EMAIL }); }
+    else {
+        const u = getUsers().find(x => x.email === e);
+        if (u) startSession(u); else localStorage.removeItem('fr3on_session');
+    }
+}
+
+// ═══════════════════════════════════════════════════
+// التنقل بين الصفحات
+// ═══════════════════════════════════════════════════
+function switchPage(id, ev) {
+    if (ev) ev.preventDefault();
+    if (id === 'addAdPage' && !isLoggedIn) { switchPage('loginPage'); showNotification("يجب تسجيل الدخول أولاً لإضافة إعلان.", "error"); return; }
+    if (id === 'profilePage' && !isLoggedIn) { switchPage('loginPage'); return; }
+    document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
+    document.getElementById(id).classList.add('active-page');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const fcb = document.getElementById('floatingChannelBtn');
+    if (fcb) fcb.style.display = (id === 'adminChannelPage' || id === 'rechargePage' || id === 'checkoutPage' || id === 'storePage') ? 'none' : 'flex';
+    if (id === 'postsPage') loadAllPosts();
+    else if (id === 'messagesPage') loadAdminMessagesRequests();
+    else if (id === 'adminChannelPage') loadChannelPosts();
+    else if (id === 'profilePage') updateProfileDisplay();
+    else if (id === 'rechargePage') { renderRechargeGames(); renderRechargePackages(); }
+    else if (id === 'storePage') renderDynamicStore();
+}
+function openChannelFromFloating(e) { if (e) e.preventDefault(); document.querySelectorAll('.bottom-nav .nav-item').forEach(i => i.classList.remove('active')); switchPage('adminChannelPage'); }
+function updateNav(el) { document.querySelectorAll('.bottom-nav .nav-item').forEach(i => i.classList.remove('active')); el.classList.add('active'); }
+function updateNavById(id) { document.querySelectorAll('.bottom-nav .nav-item').forEach(i => i.classList.remove('active')); const t = document.getElementById(id); if (t) t.classList.add('active'); }
+
+// ═══════════════════════════════════════════════════
+// الدول والعملات
+// ═══════════════════════════════════════════════════
+const countriesList = [{ name: "مصر", code: "+20", flag: "🇪🇬" }, { name: "السعودية", code: "+966", flag: "🇸🇦" }, { name: "الإمارات", code: "+971", flag: "🇦🇪" }, { name: "العراق", code: "+964", flag: "🇮🇶" }, { name: "الكويت", code: "+965", flag: "🇰🇼" }, { name: "المغرب", code: "+212", flag: "🇲🇦" }, { name: "الجزائر", code: "+213", flag: "🇩🇿" }, { name: "الأردن", code: "+962", flag: "🇯🇴" }, { name: "فلسطين", code: "+970", flag: "🇵🇸" }, { name: "سوريا", code: "+963", flag: "🇸🇾" }, { name: "لبنان", code: "+961", flag: "🇱🇧" }, { name: "قطر", code: "+974", flag: "🇶🇦" }, { name: "البحرين", code: "+973", flag: "🇧🇭" }, { name: "عمان", code: "+968", flag: "🇴🇲" }, { name: "اليمن", code: "+967", flag: "🇾🇪" }, { name: "السودان", code: "+249", flag: "🇸🇩" }, { name: "ليبيا", code: "+218", flag: "🇱🇾" }, { name: "تونس", code: "+216", flag: "🇹🇳" }, { name: "الولايات المتحدة", code: "+1", flag: "🇺🇸" }, { name: "بريطانيا", code: "+44", flag: "🇬🇧" }];
+const currenciesList = [{ name: "جنيه مصري", symbol: "EGP" }, { name: "ريال سعودي", symbol: "SAR" }, { name: "درهم إماراتي", symbol: "AED" }, { name: "دولار أمريكي", symbol: "USD" }, { name: "دينار كويتي", symbol: "KWD" }, { name: "دينار أردني", symbol: "JOD" }, { name: "ريال قطري", symbol: "QAR" }, { name: "دينار عراقي", symbol: "IQD" }, { name: "يورو", symbol: "EUR" }];
+
+function openCountryModal(t) { activeCountryTarget = t; document.getElementById('countrySearchInput').value = ''; renderCountriesList(countriesList); document.getElementById('countryModal').classList.add('show'); }
+function renderCountriesList(l) { const c = document.getElementById('countriesListContainer'); c.innerHTML = ''; l.forEach(i => { c.innerHTML += `<div class="category-option" onclick="selectCountry('${i.flag}','${i.code}','${i.name}')"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">${i.flag}</span><span>${i.name}</span></div><span style="color:var(--cyan);direction:ltr;" dir="ltr">${i.code}</span></div>`; }); }
+function filterCountries() { const q = document.getElementById('countrySearchInput').value.toLowerCase(); renderCountriesList(countriesList.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q))); }
+function closeCountryModal(e) { if (e.target.id === 'countryModal' || e.type === 'click') document.getElementById('countryModal').classList.remove('show'); }
+function selectCountry(f, c, name) {
+    if (activeCountryTarget === 'ad') {
+        document.getElementById('adFlag').innerText = f;
+        document.getElementById('adCode').innerText = c;
+    } else if (activeCountryTarget === 'store') {
+        document.getElementById('storeFlag').innerText = f;
+        document.getElementById('storeCountryName').innerText = name;
     }
     document.getElementById('countryModal').classList.remove('show');
 }
-function openCurrencyModal(){document.getElementById('currencySearchInput').value='';renderCurrenciesList(currenciesList);document.getElementById('currencyModal').classList.add('show')}
-function renderCurrenciesList(l){const c=document.getElementById('currenciesListContainer');c.innerHTML='';l.forEach(i=>{c.innerHTML+=`<div class="category-option" onclick="selectCurrency('${i.symbol}')"><span>${i.name}</span><span style="color:var(--cyan);font-weight:bold;">${i.symbol}</span></div>`})}
-function filterCurrencies(){const q=document.getElementById('currencySearchInput').value.toLowerCase();renderCurrenciesList(currenciesList.filter(c=>c.name.toLowerCase().includes(q)||c.symbol.toLowerCase().includes(q)))}
-function closeCurrencyModal(e){if(e.target.id==='currencyModal'||e.type==='click')document.getElementById('currencyModal').classList.remove('show')}
-function selectCurrency(s){document.getElementById('selectedCurrencyText').innerText=s;document.getElementById('currencyModal').classList.remove('show')}
-function handleSingleImagePick(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=ev=>{selectedSingleImage=ev.target.result;document.getElementById('selectedImagePreviewContainer').innerHTML=`<div style="position:relative;display:inline-block;width:100%;"><img src="${selectedSingleImage}" style="width:100%;max-height:200px;object-fit:contain;border-radius:12px;border:1px solid var(--cyan);background:#000;"><button type="button" onclick="clearSelectedImage()" style="position:absolute;top:5px;right:5px;background:#ff4d4d;color:#fff;border:0;border-radius:50%;width:25px;height:25px;cursor:pointer;font-weight:bold;">×</button></div>`};r.readAsDataURL(f)}}
-function clearSelectedImage(){selectedSingleImage="";document.getElementById('selectedImagePreviewContainer').innerHTML='';document.getElementById('userAdImageFile').value=''}
-function submitUserAd(){if(!isLoggedIn){switchPage('loginPage');showNotification("يجب تسجيل الدخول أولاً لإضافة إعلان.","error");return}let c=document.getElementById('userAdCategory').value;let d=document.getElementById('userAdDesc').value.trim();if(!c){showNotification("يرجى اختيار فئة الإعلان أولاً.","error");return}if(!d){showNotification("يرجى كتابة وصف للإعلان.","error");return}let s=document.getElementById('selectedCurrencyText').innerText;let p=document.getElementById('userAdPrice').value||'0';let n={title:'إعلان '+c,category:c,price:p+' '+s,desc:d,img:selectedSingleImage,author:currentUser.name,authorEmail:currentUser.email,date:new Date().toLocaleDateString('ar-EG')};let pending=JSON.parse(localStorage.getItem('fr3on_pending_posts')||'[]');pending.unshift(n);localStorage.setItem('fr3on_pending_posts',JSON.stringify(pending));document.getElementById('userAdCategory').selectedIndex=0;document.getElementById('userAdDesc').value='';document.getElementById('userAdPrice').value='0';clearSelectedImage();showNotification("تم إرسال إعلانك للإدارة للمراجعة بنجاح! ✅");updateAdminBadge();switchPage('homePage')}
-function updateAdminBadge(){if(isAdmin()){let p=JSON.parse(localStorage.getItem('fr3on_pending_posts')||'[]');let b=document.getElementById('messagesBadgeDot');if(b){if(p.length>0)b.classList.add('show');else b.classList.remove('show')}}}
-function loadAdminMessagesRequests(){const a=document.getElementById('messagesAdminSection'),c=document.getElementById('adminChatsListSection'),n=document.getElementById('normalUserMessagesBox'),co=document.getElementById('adminPendingRequestsContainer'),ch=document.getElementById('adminCustomerChatsContainer');if(isAdmin()){a.style.display='block';c.style.display='block';n.style.display='none';let p=JSON.parse(localStorage.getItem('fr3on_pending_posts')||'[]');if(p.length===0){co.innerHTML='<p style="color:#8b949e;font-size:12px;text-align:center;">لا توجد طلبات إعلانات معلقة.</p>'}else{co.innerHTML='';p.forEach((post,i)=>{let im=post.img?`<img src="${post.img}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-left:10px;border:1px solid #30363d;">`:'';co.innerHTML+=`<div style="background:#0b1018;border:1px solid #1c2634;border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;"><div style="display:flex;align-items:center;overflow:hidden;flex-grow:1;">${im}<div style="overflow:hidden;"><div style="font-weight:bold;font-size:14px;color:#fff;margin-bottom:3px;">${post.author}</div><p style="color:#8b949e;font-size:12px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${post.desc}</p></div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button onclick="approvePost(${i})" style="background:var(--cyan);color:var(--site-bg);border:0;border-radius:8px;padding:6px 12px;font-weight:bold;cursor:pointer;font-size:12px;">موافقة ✅</button><button onclick="rejectPost(${i})" style="background:#ff4d4d;color:#fff;border:0;border-radius:8px;padding:6px 12px;font-weight:bold;cursor:pointer;font-size:12px;">رفض ❌</button></div></div>`})}let ac=JSON.parse(localStorage.getItem('fr3on_active_chats_list')||'[]');if(ac.length===0){ch.innerHTML='<p style="color:#8b949e;font-size:12px;text-align:center;">لا توجد محادثات عملاء حالياً.</p>'}else{ch.innerHTML='';ac.forEach(k=>{let m=JSON.parse(localStorage.getItem(k)||'[]'),lm=m.length>0?m[m.length-1]:{text:'لا توجد رسائل',time:''},u=k.replace('fr3on_chat_','');ch.innerHTML+=`<div onclick="openSupportChat('${k}')" style="background:#071418;border:1px solid #006b72;border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:8px;"><div style="display:flex;align-items:center;gap:12px;flex-grow:1;"><div style="width:40px;height:40px;background:#0b1f24;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cyan);flex-shrink:0;"><i class="fa-solid fa-user"></i></div><div style="overflow:hidden;"><div style="color:#fff;font-size:14px;font-weight:bold;margin-bottom:3px;">${u}</div><div style="color:#8b949e;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;">${lm.type==='img'?'📷 [صورة مرسلة]':lm.text}</div></div></div><div style="text-align:left;flex-shrink:0;"><span style="color:var(--cyan);font-size:11px;font-weight:bold;display:block;margin-bottom:2px;">فتح الشات 💬</span><span style="color:#8b949e;font-size:10px;">${lm.time}</span></div></div>`})}updateAdminBadge()}else{a.style.display='none';c.style.display='none';n.style.display='block'}}
-function approvePost(i){if(!isAdmin())return;let p=JSON.parse(localStorage.getItem('fr3on_pending_posts')||'[]'),s=JSON.parse(localStorage.getItem('fr3on_all_posts')||'[]');let a=p.splice(i,1)[0];s.unshift(a);localStorage.setItem('fr3on_pending_posts',JSON.stringify(p));localStorage.setItem('fr3on_all_posts',JSON.stringify(s));showNotification("تمت الموافقة على الإعلان ونشره بنجاح! 🎉");loadAdminMessagesRequests()}
-function rejectPost(i){if(!isAdmin())return;let p=JSON.parse(localStorage.getItem('fr3on_pending_posts')||'[]');p.splice(i,1);localStorage.setItem('fr3on_pending_posts',JSON.stringify(p));showNotification("تم رفض وحذف الإعلان.","error");loadAdminMessagesRequests()}
-function loadAllPosts(){const c=document.getElementById('allPostsContainer');let p=JSON.parse(localStorage.getItem('fr3on_all_posts')||'[]'),cat=document.getElementById('filterSelectedCategoryText').innerText,si=document.getElementById('searchPostsInput'),q=si?si.value.trim().toLowerCase():'';if(cat&&cat!=='الكل'){p=p.filter(x=>x.category===cat)}if(q){p=p.filter(x=>(x.title||'').toLowerCase().includes(q)||(x.desc||'').toLowerCase().includes(q))}c.innerHTML=p.length===0?'<p style="color:#8b949e;text-align:center;padding:20px;">لا توجد منشورات في هذا القسم.</p>':'';p.forEach(post=>{let im=post.img?`<img src="${post.img}" onclick="openLightBox('${post.img}')" style="width:100%;max-height:250px;object-fit:cover;border-radius:10px;margin-bottom:10px;cursor:pointer;border:1px solid #1c2634;">`:'';c.innerHTML+=`<div style="background:#090c10;border:1px solid #1c2634;border-radius:20px;padding:20px;margin-bottom:15px;"><div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid #162230;padding-bottom:10px;"><div style="color:#fff;font-weight:bold;font-size:14px;"><i class="fa-solid fa-user" style="color:var(--cyan);"></i> ${post.author||'مستخدم'}</div><div style="color:#8b949e;font-size:11px;">${post.date||''}</div></div>${im}<h3 style="color:#fff;font-size:16px;margin-bottom:8px;">${post.title}</h3><p style="color:var(--cyan);font-weight:bold;margin-bottom:8px;">${post.price}</p><p style="color:#8b949e;font-size:13px;line-height:1.6;">${post.desc}</p></div>`})}
-function filterUserPosts(){loadAllPosts()}
-function getTargetChatKey(){if(isAdmin()&&adminActiveChatKey)return adminActiveChatKey;let i=isLoggedIn?loggedInEmail:("visitor_"+(localStorage.getItem('fr3on_visitor_id')||Math.random().toString(36).substring(7)));if(!isLoggedIn&&!localStorage.getItem('fr3on_visitor_id'))localStorage.setItem('fr3on_visitor_id',i.replace('visitor_',''));return 'fr3on_chat_'+i}
-function openSupportChat(k=null){const m=document.getElementById('supportChatModal');m.style.display='flex';if(isAdmin()&&k){adminActiveChatKey=k;document.getElementById('chatHeaderTitle').innerText="محادثة مع: "+k.replace('fr3on_chat_','')}else{adminActiveChatKey="";document.getElementById('chatHeaderTitle').innerText="إدارة MAESTRO SHOP (الدعم المباشر)"}loadChatMessages()}
-function closeSupportChat(){document.getElementById('supportChatModal').style.display='none';adminActiveChatKey="";loadAdminMessagesRequests()}
-function loadChatMessages(){const c=document.getElementById('chatMessagesContainer');let k=getTargetChatKey(),m=JSON.parse(localStorage.getItem(k)||'[]');if(m.length===0&&!isAdmin()){m=[{sender:'admin',text:'أهلاً بك في MAESTRO SHOP! كيف يمكننا مساعدتك اليوم؟',time:new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}),type:'text'}];localStorage.setItem(k,JSON.stringify(m))}c.innerHTML='';m.forEach((msg,i)=>{let isMe=(isAdmin()&&adminActiveChatKey)?(msg.sender==='admin'):(msg.sender==='user'),bg=isMe?'#032123':'#161b22',as=isMe?'flex-end':'flex-start',rs=isMe?'16px 16px 16px 0':'16px 16px 0 16px',ch=msg.isDeleted?`<div style="color:#8b949e;font-style:italic;font-size:13px;"><i class="fa-solid fa-ban"></i> تم حذف هذه الرسالة</div>`:(msg.type==='img'?`<img src="${msg.text}" style="max-width:100%;border-radius:10px;margin-bottom:5px;">`:msg.text),rb=msg.reaction?`<div style="position:absolute;bottom:-10px;${isMe?'right':'left'}:10px;background:#161b22;border:1px solid #30363d;border-radius:12px;padding:2px 6px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,0.5);">${msg.reaction}</div>`:'';c.innerHTML+=`<div style="display:flex;flex-direction:column;align-items:${as};max-width:80%;align-self:${as};position:relative;margin-bottom:10px;"><div onclick="toggleMessageMenu(event,${i})" style="background:${bg};border:1px solid #008e95;border-radius:${rs};padding:12px 16px;color:#fff;font-size:13.5px;line-height:1.5;word-break:break-all;cursor:pointer;position:relative;">${ch} ${rb}</div><div style="color:#8b949e;font-size:10px;margin-top:4px;">${msg.time}</div></div>`});c.scrollTop=c.scrollHeight}
-function toggleMessageMenu(e,i){e.stopPropagation();let ex=document.getElementById('chatMsgActionMenu');if(ex)ex.remove();let m=document.createElement('div');m.id='chatMsgActionMenu';m.style.cssText="position:absolute;background:#0b1018;border:1px solid #008e95;border-radius:30px;padding:6px 12px;display:flex;gap:12px;align-items:center;z-index:6000;box-shadow:0 4px 20px rgba(0,0,0,0.8);font-size:18px;";m.innerHTML=`<span onclick="setMsgReaction(${i},'❤️')" style="cursor:pointer;">❤️</span><span onclick="setMsgReaction(${i},'🔥')" style="cursor:pointer;">🔥</span><span onclick="setMsgReaction(${i},'👍')" style="cursor:pointer;">👍</span><span onclick="setMsgReaction(${i},'😂')" style="cursor:pointer;">😂</span><span onclick="setMsgReaction(${i},'😮')" style="cursor:pointer;">😮</span><span onclick="deleteChatMessage(${i})" style="color:#ff4d4d;font-size:14px;cursor:pointer;margin-right:5px;" title="حذف"><i class="fa-solid fa-trash"></i></span>`;let r=e.currentTarget.getBoundingClientRect();document.body.appendChild(m);m.style.top=(r.top-50)+'px';m.style.left=Math.max(10,r.left)+'px';document.addEventListener('click',function rm(){m.remove();document.removeEventListener('click',rm)},{once:true})}
-function setMsgReaction(i,e){let k=getTargetChatKey(),m=JSON.parse(localStorage.getItem(k)||'[]');m[i].reaction=e;localStorage.setItem(k,JSON.stringify(m));loadChatMessages()}
-function deleteChatMessage(i){let k=getTargetChatKey(),m=JSON.parse(localStorage.getItem(k)||'[]');m[i].isDeleted=true;m[i].text="تم حذف هذه الرسالة";m[i].reaction="";localStorage.setItem(k,JSON.stringify(m));loadChatMessages()}
-function sendUserChatMessage(){const i=document.getElementById('chatInputText'),t=i.value.trim();if(!t)return;let k=getTargetChatKey(),r=(isAdmin()&&adminActiveChatKey)?'admin':'user',m=JSON.parse(localStorage.getItem(k)||'[]');m.push({sender:r,text:t,time:new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}),type:'text',reaction:'',isDeleted:!1});localStorage.setItem(k,JSON.stringify(m));let a=JSON.parse(localStorage.getItem('fr3on_active_chats_list')||'[]');if(!a.includes(k)){a.push(k);localStorage.setItem('fr3on_active_chats_list',JSON.stringify(a))}i.value='';loadChatMessages()}
-function checkChatEnter(e){if(e.key==='Enter')sendUserChatMessage()}
-function sendChatImage(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=function(ev){let k=getTargetChatKey(),ro=(isAdmin()&&adminActiveChatKey)?'admin':'user',m=JSON.parse(localStorage.getItem(k)||'[]');m.push({sender:ro,text:ev.target.result,time:new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}),type:'img',reaction:'',isDeleted:!1});localStorage.setItem(k,JSON.stringify(m));let a=JSON.parse(localStorage.getItem('fr3on_active_chats_list')||'[]');if(!a.includes(k)){a.push(k);localStorage.setItem('fr3on_active_chats_list',JSON.stringify(a))}loadChatMessages()};r.readAsDataURL(f)}}
-function openLightBox(s){document.getElementById('lightBoxImg').src=s;document.getElementById('imageLightBox').classList.add('show')}
-function closeLightBox(){document.getElementById('imageLightBox').classList.remove('show')}
-function openFilterCategoryModal(){document.getElementById('filterCategoryModal').classList.add('show')}
-function closeFilterCategoryModal(e){if(e.target.id==='filterCategoryModal'||e.type==='click')document.getElementById('filterCategoryModal').classList.remove('show')}
-function selectFilterCategory(c,e){document.querySelectorAll('#filterCategoryModal .category-option').forEach(o=>o.classList.remove('selected'));e.classList.add('selected');document.getElementById('filterSelectedCategoryText').innerText=c;closeFilterCategoryModal();loadAllPosts()}
-function addNewPostToChannel(){if(!isAdmin())return;let t=document.getElementById('postTitleInput').value.trim(),d=document.getElementById('postDescInput').value.trim(),i=document.getElementById('postImageInput').value.trim(),l=document.getElementById('postLinkInput').value.trim(),n={title:t||'منشور رسمي',desc:d||'',img:i||'',link:l||'',comments:[],likes:0,isLiked:!1};try{let c=JSON.parse(localStorage.getItem('fr3on_channel_posts')||'[]');c.unshift(n);localStorage.setItem('fr3on_channel_posts',JSON.stringify(c))}catch(e){let c=JSON.parse(localStorage.getItem('fr3on_channel_posts')||'[]');if(c.length>0)c.pop();c.unshift(n);localStorage.setItem('fr3on_channel_posts',JSON.stringify(c))}document.getElementById('postTitleInput').value='';document.getElementById('postDescInput').value='';document.getElementById('postImageInput').value='';document.getElementById('postLinkInput').value='';loadChannelPosts();showNotification("تم النشر في القناة بنجاح! 🚀")}
-function handleImagePick(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=function(ev){let i=new Image();i.src=ev.target.result;i.onload=function(){let c=document.createElement('canvas'),ctx=c.getContext('2d'),mw=500,mh=500,w=i.width,h=i.height;if(w>h){if(w>mw){h*=mw/w;w=mw}}else{if(h>mh){w*=mh/h;h=mh}}c.width=w;c.height=h;ctx.drawImage(i,0,0,w,h);document.getElementById('postImageInput').value=c.toDataURL('image/jpeg',0.5)}};r.readAsDataURL(f)}}
-function loadChannelPosts(){const c=document.getElementById('channelPostsContainer');if(!c)return;let p=JSON.parse(localStorage.getItem('fr3on_channel_posts')||'[]');c.innerHTML=p.length===0?'<p style="color:#8b949e;text-align:center;">لا توجد منشورات.</p>':'';p.forEach((post,i)=>{let im=post.img?`<img src="${post.img}" onclick="openLightBox('${post.img}')" style="width:100%;max-height:350px;object-fit:cover;border-radius:12px;margin-bottom:12px;cursor:pointer;border:1px solid #1c2634;">`:'';let ca=post.comments||[],l=post.likes||0,il=post.isLiked||!1;c.innerHTML+=`<div style="background:#090c10;border:1px solid #1c2634;border-radius:24px;padding:22px;margin-bottom:20px;box-shadow:0 4px 20px rgba(0,0,0,0.6);"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;border-bottom:1px solid #161b22;padding-bottom:12px;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:45px;height:45px;border-radius:12px;overflow:hidden;border:1px solid var(--cyan);"><img class="fr3on-logo" style="width:100%;height:100%;object-fit:cover;"></div><div><div style="display:flex;align-items:center;gap:5px;"><span style="color:#fff;font-size:15px;font-weight:bold;">الإدارة</span><span style="color:var(--cyan);font-size:13px;"><i class="fa-solid fa-circle-check"></i></span></div><span style="color:#8b949e;font-size:11px;">٩ أكتوبر ٢٠٢٦</span></div></div></div><h3 style="color:#fff;font-size:17px;font-weight:bold;margin-bottom:10px;">${post.title}</h3><p style="color:#c9d1d9;font-size:13.5px;line-height:1.7;margin-bottom:15px;">${post.desc}</p>${im}<div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #161b22;padding-top:15px;margin-top:15px;"><button onclick="shareChannelPost(${i})" style="background:#161b22;color:#8b949e;border:1px solid #30363d;border-radius:16px;padding:8px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;"><i class="fa-solid fa-share"></i></button><button onclick="openCommentsModal(${i})" style="background:#161b22;color:#fff;border:1px solid #30363d;border-radius:16px;padding:8px 18px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:bold;"><i class="fa-regular fa-comment" style="color:var(--cyan);"></i><span>${ca.length} التعليقات</span></button><button onclick="toggleLikePost(${i})" style="background:#161b22;color:${il?'#ff4d4d':'#8b949e'};border:1px solid #30363d;border-radius:16px;padding:8px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;"><i class="${il?'fa-solid fa-thumbs-up':'fa-regular fa-thumbs-up'}"></i><span>${l>0?l:''}</span></button></div></div>`});document.querySelectorAll(".fr3on-logo").forEach(img=>{img.src=currentLogo})}
-function toggleLikePost(i){let c=JSON.parse(localStorage.getItem('fr3on_channel_posts')||'[]'),p=c[i];if(p.isLiked){p.isLiked=!1;p.likes=Math.max(0,(p.likes||1)-1)}else{p.isLiked=!0;p.likes=(p.likes||0)+1}localStorage.setItem('fr3on_channel_posts',JSON.stringify(c));loadChannelPosts()}
-function shareChannelPost(i){let u=window.location.href.split('?')[0]+'?postId='+i;if(navigator.clipboard){navigator.clipboard.writeText(u).then(()=>{showNotification("تم نسخ رابط المنشور بنجاح! 📋")})}else{prompt("انسخ الرابط:",u)}}
-function openCommentsModal(i){currentActivePostIndex=i;document.getElementById('commentsModal').style.display='flex';loadPostComments()}
-function closeCommentsModal(){document.getElementById('commentsModal').style.display='none';currentActivePostIndex=null}
-function loadPostComments(){if(currentActivePostIndex===null)return;let c=JSON.parse(localStorage.getItem('fr3on_channel_posts')||'[]'),p=c[currentActivePostIndex],cm=p.comments||[];document.getElementById('commentsCountBadge').innerText=cm.length;const el=document.getElementById('commentsListContainer');el.innerHTML=cm.length===0?'<p style="color:#8b949e;font-size:13px;text-align:center;margin-top:20px;">لا توجد تعليقات.</p>':'';cm.forEach(i=>{el.innerHTML+=`<div style="background:#161b22;border:1px solid #30363d;border-radius:14px;padding:12px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--cyan);font-size:13.5px;font-weight:bold;">${i.author}</span><span style="color:#8b949e;font-size:10.5px;">${i.time}</span></div><p style="color:#fff;font-size:13px;line-height:1.5;margin:0;">${i.text}</p></div>`});el.scrollTop=el.scrollHeight}
-function submitNewComment(){const i=document.getElementById('newCommentInput'),t=i.value.trim();if(!t||currentActivePostIndex===null)return;let c=JSON.parse(localStorage.getItem('fr3on_channel_posts')||'[]');if(!c[currentActivePostIndex].comments){c[currentActivePostIndex].comments=[]}c[currentActivePostIndex].comments.push({author:currentUser.name||'زائر',text:t,time:new Date().toLocaleDateString('ar-EG')+'، '+new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'})});localStorage.setItem('fr3on_channel_posts',JSON.stringify(c));i.value='';loadPostComments();loadChannelPosts()}
-function checkCommentEnter(e){if(e.key==='Enter'){submitNewComment()}}
+function openCurrencyModal() { document.getElementById('currencySearchInput').value = ''; renderCurrenciesList(currenciesList); document.getElementById('currencyModal').classList.add('show'); }
+function renderCurrenciesList(l) { const c = document.getElementById('currenciesListContainer'); c.innerHTML = ''; l.forEach(i => { c.innerHTML += `<div class="category-option" onclick="selectCurrency('${i.symbol}')"><span>${i.name}</span><span style="color:var(--cyan);font-weight:bold;">${i.symbol}</span></div>`; }); }
+function filterCurrencies() { const q = document.getElementById('currencySearchInput').value.toLowerCase(); renderCurrenciesList(currenciesList.filter(c => c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q))); }
+function closeCurrencyModal(e) { if (e.target.id === 'currencyModal' || e.type === 'click') document.getElementById('currencyModal').classList.remove('show'); }
+function selectCurrency(s) { document.getElementById('selectedCurrencyText').innerText = s; document.getElementById('currencyModal').classList.remove('show'); }
 
-window.onload=function(){
+// ═══════════════════════════════════════════════════
+// إضافة إعلان
+// ═══════════════════════════════════════════════════
+function handleSingleImagePick(e) {
+    const f = e.target.files[0];
+    if (f) {
+        const r = new FileReader();
+        r.onload = ev => {
+            selectedSingleImage = ev.target.result;
+            document.getElementById('selectedImagePreviewContainer').innerHTML = `<div style="position:relative;display:inline-block;width:100%;"><img src="${selectedSingleImage}" style="width:100%;max-height:200px;object-fit:contain;border-radius:12px;border:1px solid var(--cyan);background:#000;"><button type="button" onclick="clearSelectedImage()" style="position:absolute;top:5px;right:5px;background:#ff4d4d;color:#fff;border:0;border-radius:50%;width:25px;height:25px;cursor:pointer;font-weight:bold;">×</button></div>`;
+        };
+        r.readAsDataURL(f);
+    }
+}
+function clearSelectedImage() { selectedSingleImage = ""; document.getElementById('selectedImagePreviewContainer').innerHTML = ''; document.getElementById('userAdImageFile').value = ''; }
+function submitUserAd() {
+    if (!isLoggedIn) { switchPage('loginPage'); showNotification("يجب تسجيل الدخول أولاً لإضافة إعلان.", "error"); return; }
+    let c = document.getElementById('userAdCategory').value;
+    let d = document.getElementById('userAdDesc').value.trim();
+    if (!c) { showNotification("يرجى اختيار فئة الإعلان أولاً.", "error"); return; }
+    if (!d) { showNotification("يرجى كتابة وصف للإعلان.", "error"); return; }
+    let s = document.getElementById('selectedCurrencyText').innerText;
+    let p = document.getElementById('userAdPrice').value || '0';
+    let n = { title: 'إعلان ' + c, category: c, price: p + ' ' + s, desc: d, img: selectedSingleImage, author: currentUser.name, authorEmail: currentUser.email, date: new Date().toLocaleDateString('ar-EG') };
+    let pending = JSON.parse(localStorage.getItem('fr3on_pending_posts') || '[]');
+    pending.unshift(n);
+    localStorage.setItem('fr3on_pending_posts', JSON.stringify(pending));
+    document.getElementById('userAdCategory').selectedIndex = 0;
+    document.getElementById('userAdDesc').value = '';
+    document.getElementById('userAdPrice').value = '0';
+    clearSelectedImage();
+    showNotification("تم إرسال إعلانك للإدارة للمراجعة بنجاح! ✅");
+    updateAdminBadge();
+    switchPage('homePage');
+}
+
+function updateAdminBadge() {
+    if (isAdmin()) {
+        let p = JSON.parse(localStorage.getItem('fr3on_pending_posts') || '[]');
+        let b = document.getElementById('messagesBadgeDot');
+        if (b) { if (p.length > 0) b.classList.add('show'); else b.classList.remove('show'); }
+    }
+}
+
+// ═══════════════════════════════════════════════════
+// صفحة الرسائل (Admin)
+// ═══════════════════════════════════════════════════
+function loadAdminMessagesRequests() {
+    const a = document.getElementById('messagesAdminSection'), c = document.getElementById('adminChatsListSection'), n = document.getElementById('normalUserMessagesBox'), co = document.getElementById('adminPendingRequestsContainer'), ch = document.getElementById('adminCustomerChatsContainer');
+    if (isAdmin()) {
+        a.style.display = 'block'; c.style.display = 'block'; n.style.display = 'none';
+        let p = JSON.parse(localStorage.getItem('fr3on_pending_posts') || '[]');
+        if (p.length === 0) { co.innerHTML = '<p style="color:#8b949e;font-size:12px;text-align:center;">لا توجد طلبات إعلانات معلقة.</p>'; }
+        else {
+            co.innerHTML = '';
+            p.forEach((post, i) => {
+                let im = post.img ? `<img src="${post.img}" style="width:50px;height:50px;object-fit:cover;border-radius:8px;margin-left:10px;border:1px solid #30363d;">` : '';
+                co.innerHTML += `<div style="background:#0b1018;border:1px solid #1c2634;border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;"><div style="display:flex;align-items:center;overflow:hidden;flex-grow:1;">${im}<div style="overflow:hidden;"><div style="font-weight:bold;font-size:14px;color:#fff;margin-bottom:3px;">${post.author}</div><p style="color:#8b949e;font-size:12px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${post.desc}</p></div></div><div style="display:flex;gap:6px;flex-shrink:0;"><button onclick="approvePost(${i})" style="background:var(--cyan);color:var(--site-bg);border:0;border-radius:8px;padding:6px 12px;font-weight:bold;cursor:pointer;font-size:12px;">موافقة ✅</button><button onclick="rejectPost(${i})" style="background:#ff4d4d;color:#fff;border:0;border-radius:8px;padding:6px 12px;font-weight:bold;cursor:pointer;font-size:12px;">رفض ❌</button></div></div>`;
+            });
+        }
+        let ac = JSON.parse(localStorage.getItem('fr3on_active_chats_list') || '[]');
+        if (ac.length === 0) { ch.innerHTML = '<p style="color:#8b949e;font-size:12px;text-align:center;">لا توجد محادثات عملاء حالياً.</p>'; }
+        else {
+            ch.innerHTML = '';
+            ac.forEach(k => {
+                let m = JSON.parse(localStorage.getItem(k) || '[]'), lm = m.length > 0 ? m[m.length - 1] : { text: 'لا توجد رسائل', time: '' }, u = k.replace('fr3on_chat_', '');
+                ch.innerHTML += `<div onclick="openSupportChat('${k}')" style="background:#071418;border:1px solid #006b72;border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:8px;"><div style="display:flex;align-items:center;gap:12px;flex-grow:1;"><div style="width:40px;height:40px;background:#0b1f24;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cyan);flex-shrink:0;"><i class="fa-solid fa-user"></i></div><div style="overflow:hidden;"><div style="color:#fff;font-size:14px;font-weight:bold;margin-bottom:3px;">${u}</div><div style="color:#8b949e;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;">${lm.type === 'img' ? '📷 [صورة مرسلة]' : lm.text}</div></div></div><div style="text-align:left;flex-shrink:0;"><span style="color:var(--cyan);font-size:11px;font-weight:bold;display:block;margin-bottom:2px;">فتح الشات 💬</span><span style="color:#8b949e;font-size:10px;">${lm.time}</span></div></div>`;
+            });
+        }
+        updateAdminBadge();
+    } else {
+        a.style.display = 'none'; c.style.display = 'none'; n.style.display = 'block';
+    }
+}
+
+function approvePost(i) {
+    if (!isAdmin()) return;
+    let p = JSON.parse(localStorage.getItem('fr3on_pending_posts') || '[]');
+    let s = JSON.parse(localStorage.getItem('fr3on_all_posts') || '[]');
+    let a = p.splice(i, 1)[0];
+    s.unshift(a);
+    localStorage.setItem('fr3on_pending_posts', JSON.stringify(p));
+    localStorage.setItem('fr3on_all_posts', JSON.stringify(s));
+    showNotification("تمت الموافقة على الإعلان ونشره بنجاح! 🎉");
+    loadAdminMessagesRequests();
+}
+function rejectPost(i) {
+    if (!isAdmin()) return;
+    let p = JSON.parse(localStorage.getItem('fr3on_pending_posts') || '[]');
+    p.splice(i, 1);
+    localStorage.setItem('fr3on_pending_posts', JSON.stringify(p));
+    showNotification("تم رفض وحذف الإعلان.", "error");
+    loadAdminMessagesRequests();
+}
+
+// ═══════════════════════════════════════════════════
+// المنشورات
+// ═══════════════════════════════════════════════════
+function loadAllPosts() {
+    const c = document.getElementById('allPostsContainer');
+    let p = JSON.parse(localStorage.getItem('fr3on_all_posts') || '[]');
+    let cat = document.getElementById('filterSelectedCategoryText').innerText;
+    let si = document.getElementById('searchPostsInput');
+    let q = si ? si.value.trim().toLowerCase() : '';
+    if (cat && cat !== 'الكل') p = p.filter(x => x.category === cat);
+    if (q) p = p.filter(x => (x.title || '').toLowerCase().includes(q) || (x.desc || '').toLowerCase().includes(q));
+    c.innerHTML = p.length === 0 ? '<p style="color:#8b949e;text-align:center;padding:20px;">لا توجد منشورات في هذا القسم.</p>' : '';
+    p.forEach(post => {
+        let im = post.img ? `<img src="${post.img}" onclick="openLightBox('${post.img}')" style="width:100%;max-height:250px;object-fit:cover;border-radius:10px;margin-bottom:10px;cursor:pointer;border:1px solid #1c2634;">` : '';
+        c.innerHTML += `<div style="background:#090c10;border:1px solid #1c2634;border-radius:20px;padding:20px;margin-bottom:15px;"><div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid #162230;padding-bottom:10px;"><div style="color:#fff;font-weight:bold;font-size:14px;"><i class="fa-solid fa-user" style="color:var(--cyan);"></i> ${post.author || 'مستخدم'}</div><div style="color:#8b949e;font-size:11px;">${post.date || ''}</div></div>${im}<h3 style="color:#fff;font-size:16px;margin-bottom:8px;">${post.title}</h3><p style="color:var(--cyan);font-weight:bold;margin-bottom:8px;">${post.price}</p><p style="color:#8b949e;font-size:13px;line-height:1.6;">${post.desc}</p></div>`;
+    });
+}
+function filterUserPosts() { loadAllPosts(); }
+
+// ═══════════════════════════════════════════════════
+// الشات والدعم
+// ═══════════════════════════════════════════════════
+function getTargetChatKey() {
+    if (isAdmin() && adminActiveChatKey) return adminActiveChatKey;
+    let i = isLoggedIn ? loggedInEmail : ("visitor_" + (localStorage.getItem('fr3on_visitor_id') || Math.random().toString(36).substring(7)));
+    if (!isLoggedIn && !localStorage.getItem('fr3on_visitor_id')) localStorage.setItem('fr3on_visitor_id', i.replace('visitor_', ''));
+    return 'fr3on_chat_' + i;
+}
+function openSupportChat(k = null) {
+    const m = document.getElementById('supportChatModal');
+    m.style.display = 'flex';
+    if (isAdmin() && k) {
+        adminActiveChatKey = k;
+        document.getElementById('chatHeaderTitle').innerText = "محادثة مع: " + k.replace('fr3on_chat_', '');
+    } else {
+        adminActiveChatKey = "";
+        document.getElementById('chatHeaderTitle').innerText = "إدارة MAESTRO SHOP (الدعم المباشر)";
+    }
+    loadChatMessages();
+}
+function closeSupportChat() { document.getElementById('supportChatModal').style.display = 'none'; adminActiveChatKey = ""; loadAdminMessagesRequests(); }
+function loadChatMessages() {
+    const c = document.getElementById('chatMessagesContainer');
+    let k = getTargetChatKey();
+    let m = JSON.parse(localStorage.getItem(k) || '[]');
+    if (m.length === 0 && !isAdmin()) {
+        m = [{ sender: 'admin', text: 'أهلاً بك في MAESTRO SHOP! كيف يمكننا مساعدتك اليوم؟', time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }), type: 'text' }];
+        localStorage.setItem(k, JSON.stringify(m));
+    }
+    c.innerHTML = '';
+    m.forEach((msg, i) => {
+        let isMe = (isAdmin() && adminActiveChatKey) ? (msg.sender === 'admin') : (msg.sender === 'user');
+        let bg = isMe ? '#032123' : '#161b22';
+        let as = isMe ? 'flex-end' : 'flex-start';
+        let rs = isMe ? '16px 16px 16px 0' : '16px 16px 0 16px';
+        let ch = msg.isDeleted ? `<div style="color:#8b949e;font-style:italic;font-size:13px;"><i class="fa-solid fa-ban"></i> تم حذف هذه الرسالة</div>` : (msg.type === 'img' ? `<img src="${msg.text}" style="max-width:100%;border-radius:10px;margin-bottom:5px;">` : msg.text);
+        let rb = msg.reaction ? `<div style="position:absolute;bottom:-10px;${isMe ? 'right' : 'left'}:10px;background:#161b22;border:1px solid #30363d;border-radius:12px;padding:2px 6px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,0.5);">${msg.reaction}</div>` : '';
+        c.innerHTML += `<div style="display:flex;flex-direction:column;align-items:${as};max-width:80%;align-self:${as};position:relative;margin-bottom:10px;"><div onclick="toggleMessageMenu(event,${i})" style="background:${bg};border:1px solid #008e95;border-radius:${rs};padding:12px 16px;color:#fff;font-size:13.5px;line-height:1.5;word-break:break-all;cursor:pointer;position:relative;">${ch} ${rb}</div><div style="color:#8b949e;font-size:10px;margin-top:4px;">${msg.time}</div></div>`;
+    });
+    c.scrollTop = c.scrollHeight;
+}
+function toggleMessageMenu(e, i) {
+    e.stopPropagation();
+    let ex = document.getElementById('chatMsgActionMenu'); if (ex) ex.remove();
+    let m = document.createElement('div');
+    m.id = 'chatMsgActionMenu';
+    m.style.cssText = "position:absolute;background:#0b1018;border:1px solid #008e95;border-radius:30px;padding:6px 12px;display:flex;gap:12px;align-items:center;z-index:6000;box-shadow:0 4px 20px rgba(0,0,0,0.8);font-size:18px;";
+    m.innerHTML = `<span onclick="setMsgReaction(${i},'❤️')" style="cursor:pointer;">❤️</span><span onclick="setMsgReaction(${i},'🔥')" style="cursor:pointer;">🔥</span><span onclick="setMsgReaction(${i},'👍')" style="cursor:pointer;">👍</span><span onclick="setMsgReaction(${i},'😂')" style="cursor:pointer;">😂</span><span onclick="setMsgReaction(${i},'😮')" style="cursor:pointer;">😮</span><span onclick="deleteChatMessage(${i})" style="color:#ff4d4d;font-size:14px;cursor:pointer;margin-right:5px;" title="حذف"><i class="fa-solid fa-trash"></i></span>`;
+    let r = e.currentTarget.getBoundingClientRect();
+    document.body.appendChild(m);
+    m.style.top = (r.top - 50) + 'px';
+    m.style.left = Math.max(10, r.left) + 'px';
+    document.addEventListener('click', function rm() { m.remove(); document.removeEventListener('click', rm); }, { once: true });
+}
+function setMsgReaction(i, e) { let k = getTargetChatKey(), m = JSON.parse(localStorage.getItem(k) || '[]'); m[i].reaction = e; localStorage.setItem(k, JSON.stringify(m)); loadChatMessages(); }
+function deleteChatMessage(i) { let k = getTargetChatKey(), m = JSON.parse(localStorage.getItem(k) || '[]'); m[i].isDeleted = true; m[i].text = "تم حذف هذه الرسالة"; m[i].reaction = ""; localStorage.setItem(k, JSON.stringify(m)); loadChatMessages(); }
+function sendUserChatMessage() {
+    const i = document.getElementById('chatInputText'), t = i.value.trim();
+    if (!t) return;
+    let k = getTargetChatKey(), r = (isAdmin() && adminActiveChatKey) ? 'admin' : 'user';
+    let m = JSON.parse(localStorage.getItem(k) || '[]');
+    m.push({ sender: r, text: t, time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }), type: 'text', reaction: '', isDeleted: false });
+    localStorage.setItem(k, JSON.stringify(m));
+    let a = JSON.parse(localStorage.getItem('fr3on_active_chats_list') || '[]');
+    if (!a.includes(k)) { a.push(k); localStorage.setItem('fr3on_active_chats_list', JSON.stringify(a)); }
+    i.value = ''; loadChatMessages();
+}
+function checkChatEnter(e) { if (e.key === 'Enter') sendUserChatMessage(); }
+function sendChatImage(e) {
+    const f = e.target.files[0];
+    if (f) {
+        const r = new FileReader();
+        r.onload = function (ev) {
+            let k = getTargetChatKey(), ro = (isAdmin() && adminActiveChatKey) ? 'admin' : 'user';
+            let m = JSON.parse(localStorage.getItem(k) || '[]');
+            m.push({ sender: ro, text: ev.target.result, time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }), type: 'img', reaction: '', isDeleted: false });
+            localStorage.setItem(k, JSON.stringify(m));
+            let a = JSON.parse(localStorage.getItem('fr3on_active_chats_list') || '[]');
+            if (!a.includes(k)) { a.push(k); localStorage.setItem('fr3on_active_chats_list', JSON.stringify(a)); }
+            loadChatMessages();
+        };
+        r.readAsDataURL(f);
+    }
+}
+
+// ═══════════════════════════════════════════════════
+// Lightbox والفلاتر
+// ═══════════════════════════════════════════════════
+function openLightBox(s) { document.getElementById('lightBoxImg').src = s; document.getElementById('imageLightBox').classList.add('show'); }
+function closeLightBox() { document.getElementById('imageLightBox').classList.remove('show'); }
+function openFilterCategoryModal() { document.getElementById('filterCategoryModal').classList.add('show'); }
+function closeFilterCategoryModal(e) { if (e.target.id === 'filterCategoryModal' || e.type === 'click') document.getElementById('filterCategoryModal').classList.remove('show'); }
+function selectFilterCategory(c, e) { document.querySelectorAll('#filterCategoryModal .category-option').forEach(o => o.classList.remove('selected')); e.classList.add('selected'); document.getElementById('filterSelectedCategoryText').innerText = c; closeFilterCategoryModal(); loadAllPosts(); }
+
+// ═══════════════════════════════════════════════════
+// القناة (Admin Posts)
+// ═══════════════════════════════════════════════════
+function addNewPostToChannel() {
+    if (!isAdmin()) return;
+    let t = document.getElementById('postTitleInput').value.trim();
+    let d = document.getElementById('postDescInput').value.trim();
+    let i = document.getElementById('postImageInput').value.trim();
+    let l = document.getElementById('postLinkInput').value.trim();
+    let n = { title: t || 'منشور رسمي', desc: d || '', img: i || '', link: l || '', comments: [], likes: 0, isLiked: false };
+    try {
+        let c = JSON.parse(localStorage.getItem('fr3on_channel_posts') || '[]');
+        c.unshift(n);
+        localStorage.setItem('fr3on_channel_posts', JSON.stringify(c));
+    } catch (e) {
+        let c = JSON.parse(localStorage.getItem('fr3on_channel_posts') || '[]');
+        if (c.length > 0) c.pop();
+        c.unshift(n);
+        localStorage.setItem('fr3on_channel_posts', JSON.stringify(c));
+    }
+    document.getElementById('postTitleInput').value = '';
+    document.getElementById('postDescInput').value = '';
+    document.getElementById('postImageInput').value = '';
+    document.getElementById('postLinkInput').value = '';
+    loadChannelPosts();
+    showNotification("تم النشر في القناة بنجاح! 🚀");
+}
+function handleImagePick(e) {
+    const f = e.target.files[0];
+    if (f) {
+        const r = new FileReader();
+        r.onload = function (ev) {
+            let i = new Image();
+            i.src = ev.target.result;
+            i.onload = function () {
+                let c = document.createElement('canvas'), ctx = c.getContext('2d'), mw = 500, mh = 500, w = i.width, h = i.height;
+                if (w > h) { if (w > mw) { h *= mw / w; w = mw; } }
+                else { if (h > mh) { w *= mh / h; h = mh; } }
+                c.width = w; c.height = h;
+                ctx.drawImage(i, 0, 0, w, h);
+                document.getElementById('postImageInput').value = c.toDataURL('image/jpeg', 0.5);
+            };
+        };
+        r.readAsDataURL(f);
+    }
+}
+function loadChannelPosts() {
+    const c = document.getElementById('channelPostsContainer');
+    if (!c) return;
+    let p = JSON.parse(localStorage.getItem('fr3on_channel_posts') || '[]');
+    c.innerHTML = p.length === 0 ? '<p style="color:#8b949e;text-align:center;">لا توجد منشورات.</p>' : '';
+    p.forEach((post, i) => {
+        let im = post.img ? `<img src="${post.img}" onclick="openLightBox('${post.img}')" style="width:100%;max-height:350px;object-fit:cover;border-radius:12px;margin-bottom:12px;cursor:pointer;border:1px solid #1c2634;">` : '';
+        let ca = post.comments || [], l = post.likes || 0, il = post.isLiked || false;
+        c.innerHTML += `<div style="background:#090c10;border:1px solid #1c2634;border-radius:24px;padding:22px;margin-bottom:20px;box-shadow:0 4px 20px rgba(0,0,0,0.6);"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;border-bottom:1px solid #161b22;padding-bottom:12px;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:45px;height:45px;border-radius:12px;overflow:hidden;border:1px solid var(--cyan);"><img class="fr3on-logo" style="width:100%;height:100%;object-fit:cover;"></div><div><div style="display:flex;align-items:center;gap:5px;"><span style="color:#fff;font-size:15px;font-weight:bold;">الإدارة</span><span style="color:var(--cyan);font-size:13px;"><i class="fa-solid fa-circle-check"></i></span></div><span style="color:#8b949e;font-size:11px;">٩ أكتوبر ٢٠٢٦</span></div></div></div><h3 style="color:#fff;font-size:17px;font-weight:bold;margin-bottom:10px;">${post.title}</h3><p style="color:#c9d1d9;font-size:13.5px;line-height:1.7;margin-bottom:15px;">${post.desc}</p>${im}<div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #161b22;padding-top:15px;margin-top:15px;"><button onclick="shareChannelPost(${i})" style="background:#161b22;color:#8b949e;border:1px solid #30363d;border-radius:16px;padding:8px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;"><i class="fa-solid fa-share"></i></button><button onclick="openCommentsModal(${i})" style="background:#161b22;color:#fff;border:1px solid #30363d;border-radius:16px;padding:8px 18px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:bold;"><i class="fa-regular fa-comment" style="color:var(--cyan);"></i><span>${ca.length} التعليقات</span></button><button onclick="toggleLikePost(${i})" style="background:#161b22;color:${il ? '#ff4d4d' : '#8b949e'};border:1px solid #30363d;border-radius:16px;padding:8px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;"><i class="${il ? 'fa-solid fa-thumbs-up' : 'fa-regular fa-thumbs-up'}"></i><span>${l > 0 ? l : ''}</span></button></div></div>`;
+    });
+    document.querySelectorAll(".fr3on-logo").forEach(img => { img.src = currentLogo; });
+}
+function toggleLikePost(i) {
+    let c = JSON.parse(localStorage.getItem('fr3on_channel_posts') || '[]'), p = c[i];
+    if (p.isLiked) { p.isLiked = false; p.likes = Math.max(0, (p.likes || 1) - 1); }
+    else { p.isLiked = true; p.likes = (p.likes || 0) + 1; }
+    localStorage.setItem('fr3on_channel_posts', JSON.stringify(c));
+    loadChannelPosts();
+}
+function shareChannelPost(i) {
+    let u = window.location.href.split('?')[0] + '?postId=' + i;
+    if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => { showNotification("تم نسخ رابط المنشور بنجاح! 📋"); });
+    else prompt("انسخ الرابط:", u);
+}
+function openCommentsModal(i) { currentActivePostIndex = i; document.getElementById('commentsModal').style.display = 'flex'; loadPostComments(); }
+function closeCommentsModal() { document.getElementById('commentsModal').style.display = 'none'; currentActivePostIndex = null; }
+function loadPostComments() {
+    if (currentActivePostIndex === null) return;
+    let c = JSON.parse(localStorage.getItem('fr3on_channel_posts') || '[]'), p = c[currentActivePostIndex], cm = p.comments || [];
+    document.getElementById('commentsCountBadge').innerText = cm.length;
+    const el = document.getElementById('commentsListContainer');
+    el.innerHTML = cm.length === 0 ? '<p style="color:#8b949e;font-size:13px;text-align:center;margin-top:20px;">لا توجد تعليقات.</p>' : '';
+    cm.forEach(i => {
+        el.innerHTML += `<div style="background:#161b22;border:1px solid #30363d;border-radius:14px;padding:12px 14px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--cyan);font-size:13.5px;font-weight:bold;">${i.author}</span><span style="color:#8b949e;font-size:10.5px;">${i.time}</span></div><p style="color:#fff;font-size:13px;line-height:1.5;margin:0;">${i.text}</p></div>`;
+    });
+    el.scrollTop = el.scrollHeight;
+}
+function submitNewComment() {
+    const i = document.getElementById('newCommentInput'), t = i.value.trim();
+    if (!t || currentActivePostIndex === null) return;
+    let c = JSON.parse(localStorage.getItem('fr3on_channel_posts') || '[]');
+    if (!c[currentActivePostIndex].comments) c[currentActivePostIndex].comments = [];
+    c[currentActivePostIndex].comments.push({ author: currentUser.name || 'زائر', text: t, time: new Date().toLocaleDateString('ar-EG') + '، ' + new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }) });
+    localStorage.setItem('fr3on_channel_posts', JSON.stringify(c));
+    i.value = '';
+    loadPostComments();
+    loadChannelPosts();
+}
+function checkCommentEnter(e) { if (e.key === 'Enter') submitNewComment(); }
+
+// ═══════════════════════════════════════════════════
+// التشغيل
+// ═══════════════════════════════════════════════════
+window.onload = function () {
     applySiteColors();
     renderDynamicStore();
     renderNav();
@@ -1186,8 +1697,8 @@ window.onload=function(){
     restoreSession();
     renderHomePageDynamicElements();
     updateSiteTextsUI();
-    initFirebaseSync(); // تشغيل المزامنة
+    initFirebaseSync();
 };
 </script>
 </body>
-                </html> 
+</html>
