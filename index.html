@@ -633,37 +633,45 @@ function initFirebaseSync() {
     }
     const docRef = window.fsDoc(window.fsDB, "settings", "siteData");
     
-    window.fsOnSnapshot(docRef, (docSnap) => {
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            if (data.logo) currentLogo = data.logo;
-            if (data.storeName) currentStoreName = data.storeName;
-            if (data.heroDesc) currentHeroDesc = data.heroDesc;
-            if (data.warningText) currentWarningText = data.warningText;
-            if (data.channels) siteChannels = data.channels;
-            if (data.phones) sitePhones = data.phones;
-            if (data.telegram) siteTelegram = data.telegram;
-            if (data.colors) siteColors = data.colors;
-            if (data.games) siteGames = data.games;
-            if (data.apps) siteApps = data.apps;
-            if (data.packages) sitePackages = data.packages;
-            
-            applySiteColors();
-            updateSiteTextsUI();
-            renderDynamicStore();
-            renderHomePageDynamicElements();
-            if (typeof renderRechargeGames === 'function') renderRechargeGames();
-            if (typeof renderRechargePackages === 'function') renderRechargePackages();
-            if (isAdmin() && typeof setupAdminPanel === 'function') setupAdminPanel();
-            
-        } else {
-            window.fsSetDoc(docRef, {
-                logo: currentLogo, storeName: currentStoreName, heroDesc: currentHeroDesc, warningText: currentWarningText,
-                channels: siteChannels, phones: sitePhones, telegram: siteTelegram, 
-                colors: siteColors, games: siteGames, apps: siteApps, packages: sitePackages
-            }).catch(e => console.error("Firebase Seed Error:", e));
+    window.fsOnSnapshot(docRef, 
+        (docSnap) => {
+            console.log("🔥 Firebase sync OK");
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                if (data.logo) currentLogo = data.logo;
+                if (data.storeName) currentStoreName = data.storeName;
+                if (data.heroDesc) currentHeroDesc = data.heroDesc;
+                if (data.warningText) currentWarningText = data.warningText;
+                if (data.channels) siteChannels = data.channels;
+                if (data.phones) sitePhones = data.phones;
+                if (data.telegram) siteTelegram = data.telegram;
+                if (data.colors) siteColors = data.colors;
+                if (data.games) siteGames = data.games;
+                if (data.apps) siteApps = data.apps;
+                if (data.packages) sitePackages = data.packages;
+                
+                applySiteColors();
+                updateSiteTextsUI();
+                renderDynamicStore();
+                renderHomePageDynamicElements();
+                if (typeof renderRechargeGames === 'function') renderRechargeGames();
+                if (typeof renderRechargePackages === 'function') renderRechargePackages();
+                if (isAdmin() && typeof setupAdminPanel === 'function') setupAdminPanel();
+                
+            } else {
+                window.fsSetDoc(docRef, {
+                    logo: currentLogo, storeName: currentStoreName, 
+                    heroDesc: currentHeroDesc, warningText: currentWarningText,
+                    channels: siteChannels, phones: sitePhones, telegram: siteTelegram, 
+                    colors: siteColors, games: siteGames, apps: siteApps, packages: sitePackages
+                }, { merge: true })
+                .catch(e => console.error("Firebase Seed Error:", e));
+            }
+        },
+        (error) => {
+            console.error("❌ Firebase Sync Error:", error.code, error.message);
         }
-    });
+    );
 }
   function applySiteColors() {
     document.documentElement.style.setProperty('--site-primary', siteColors.primary);
@@ -1038,16 +1046,27 @@ async function saveAdminPackages() {
     if(!packages) return;
     packages.forEach((pkg, i) => {
         pkg.name = document.getElementById(`pkgName_${i}`).value.trim();
-        pkg.price = document.getElementById(`pkgPrice_${i}`).value.trim();
+        pkg.price = Number(document.getElementById(`pkgPrice_${i}`).value.trim()) || 0; 
     });
     
-    if (window.fsDB) {
-        await window.fsSetDoc(window.fsDoc(window.fsDB, "settings", "siteData"), { packages: sitePackages }, { merge: true });
+    if (!window.fsDB) {
+        showNotification('❌ Firebase مش متصل، التعديل مش هيتحفظ', 'error');
+        return;
     }
     
-    renderRechargePackages();
-    closeAdminPackagesModal();
-    showNotification('تم حفظ الباقات بنجاح! التغيير ظهر للكل فوراً 💎');
+    try {
+        await window.fsSetDoc(
+            window.fsDoc(window.fsDB, "settings", "siteData"),
+            { packages: sitePackages },
+            { merge: true }
+        );
+        renderRechargePackages();
+        closeAdminPackagesModal();
+        showNotification('✅ تم الحفظ! هيظهر لكل الزباين فورًا 💎');
+    } catch (err) {
+        console.error("❌ فشل حفظ الباقات:", err);
+        showNotification('❌ فشل الحفظ: ' + err.message, 'error');
+    }
 }
 
 function isAdmin(){return isLoggedIn&&loggedInEmail===ADMIN_EMAIL}
@@ -1172,4 +1191,3 @@ window.onload=function(){
 </script>
 </body>
                 </html> 
- 
