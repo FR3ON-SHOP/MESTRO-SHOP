@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- كود Firebase (محدث عشان يشمل الطلبات) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -24,7 +23,6 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // ربط الدوال بـ Window عشان الـ JavaScript العادي يقدر يستخدمها
   window.fsDB = db;
   window.fsDoc = doc;
   window.fsSetDoc = setDoc;
@@ -220,7 +218,7 @@
 <div id="adminOrdersPage" class="page-section">
 <div style="max-width:92%;margin:30px auto;background:#090c10;border:1px solid #1c2634;border-radius:25px;padding:30px 20px;box-shadow:0 4px 25px rgba(0,0,0,0.8);text-align:right;" dir="rtl">
 <h2 style="color:var(--cyan);font-size:22px;font-weight:bold;margin-bottom:15px;"><i class="fa-solid fa-box"></i> خانة الطلبات (للإدارة)</h2>
-<p style="color:#8b949e;font-size:13px;margin-bottom:20px;">أي طلب جديد من العملاء (ألعاب أو تطبيقات) هيظهر هنا فوراً.</p>
+<p style="color:#8b949e;font-size:13px;margin-bottom:20px;">أي طلب جديد من العملاء (ألعاب) هيظهر هنا فوراً.</p>
 <div id="adminOrdersContainer" style="display:flex;flex-direction:column;gap:15px;">
     <p style="color:#8b949e;text-align:center;">جاري تحميل الطلبات...</p>
 </div>
@@ -368,7 +366,7 @@
             <label style="display: block; color: #fff; font-size: 13px; font-weight: bold; margin-bottom: 8px;">الرقم الذي تم التحويل منه <span style="color: red;">*</span></label>
             <input type="text" id="checkoutSenderNumber" placeholder="أدخل رقم المحفظة أو الحساب" style="width: 100%; background: #000; border: 1px solid #30363d; border-radius: 10px; padding: 12px 15px; color: #fff; font-size: 14px; outline: none; margin-bottom: 15px;">
             
-            <!-- مكان رفع الصورة اللي كان ناقص -->
+            <!-- مكان رفع الصورة -->
             <label style="display: block; color: #fff; font-size: 13px; font-weight: bold; margin-bottom: 8px;">صورة إثبات التحويل <span style="color: red;">*</span></label>
             <div onclick="document.getElementById('checkoutTransferImage').click()" style="background: #000; border: 1px dashed #00f5f7; border-radius: 10px; padding: 20px; text-align: center; cursor: pointer;">
                 <i class="fa-solid fa-cloud-arrow-up" style="font-size: 24px; color: #00f5f7; margin-bottom: 8px;"></i>
@@ -519,7 +517,7 @@
 <nav class="bottom-nav" id="bottomNav"></nav>
 
 <script>
-  const ADMIN_EMAIL="mestro_shop@gmail.com",ADMIN_PASSWORD="mestro_shooprmr123000";
+    const ADMIN_EMAIL="mestro_shop@gmail.com",ADMIN_PASSWORD="mestro_shooprmr123000";
 const DEFAULT_LOGO="https://i.ibb.co/6P6yKq5J/logo.png",DEFAULT_STORE_NAME="MAESTRO SHOP",DEFAULT_HERO_DESC="وجهة ألعاب بلمسة نيونية، سريعة، ومهيأة لعرض الروابط والتواصل مع مجتمع MAESTRO SHOP.",DEFAULT_WARNING_TEXT="احذر النصب هذه هي الروابط والحسابات الرسمية الوحيدة<br>الخاصة بمتجر MAESTRO SHOP الإدارة غير مسؤولة عن<br>أي تعامل يتم خارج الروابط والحسابات الرسمية.";
 const defaultChannels=[{name:"قناه شحن + عرض + مسابقات",type:"WHATSAPP",desc:"قناة شحن وعروض ومسابقات 🎮",icon:"fa-whatsapp",link:"https://whatsapp.com/channel/0029VbAu2bs5PO0yXbGtBD2S"}];
 const defaultPhones=[{phone:"01032329206",label:"رقم الدعم",link:"https://wa.me/201032329206"}];
@@ -842,7 +840,36 @@ function handleCheckoutImage(e) {
         reader.readAsDataURL(file);
     }
 }
-  function submitCheckoutOrder() {
+function compressImage(base64Str, maxWidth = 800, maxHeight = 800) {
+    return new Promise((resolve) => {
+        let img = new Image();
+        img.src = base64Str;
+        img.onload = () => {
+            let canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+                if (width > maxWidth) {
+                    height *= maxWidth / width;
+                    width = maxWidth;
+                }
+            } else {
+                if (height > maxHeight) {
+                    width *= maxHeight / height;
+                    height = maxHeight;
+                }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            let ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.6)); // نسبة الضغط 60%
+        }
+    });
+}
+
+async function submitCheckoutOrder() {
     const methodId = document.getElementById('method_id').style.borderColor === 'rgb(0, 245, 247)';
     const isApp = siteApps.some(a => a.key === rechargeSelectedGameKey);
     let orderDetails = "";
@@ -888,19 +915,23 @@ function handleCheckoutImage(e) {
         checkoutTransferImageBase64 = "";
         switchPage('homePage');
     } else {
-        // لو لعبة: يبعت في قاعدة بيانات Firebase عشان يوصل للأدمن
+        // لو لعبة: يبعت في قاعدة بيانات Firebase
+        showNotification('جاري إرسال الطلب...', 'success');
+        const compressedImage = await compressImage(checkoutTransferImageBase64);
+        
         const orderText = `🎮 المنتج: ${itemName}\n📦 الباقة: ${rechargeSelectedPackage.name}\n💰 السعر: ${finalPriceToSend} ج.م\n\n${orderDetails}\n\n💳 طريقة الدفع: ${payName}\n📱 الرقم المحول منه: ${senderNumber}`;
         
         if (window.dbAddDoc) {
             window.dbAddDoc(window.dbCollection(window.fsDB, "orders"), {
                 text: orderText,
-                image: checkoutTransferImageBase64,
+                image: compressedImage,
                 date: new Date().toLocaleString('ar-EG'),
                 status: 'pending'
             }).then(() => {
                 showNotification('تم إرسال الطلب للإدارة بنجاح! سيتم مراجعته قريباً. ✅');
             }).catch(e => {
-                showNotification('حدث خطأ في إرسال الطلب!', 'error');
+                console.error(e);
+                showNotification('حدث خطأ في إرسال الطلب! قد تكون الصورة كبيرة.', 'error');
             });
         }
         
@@ -1071,10 +1102,13 @@ function setupAdminPanel(){document.getElementById('customLogoInput').value=curr
 function renderNav(){
   const n=document.getElementById('bottomNav'),b=document.getElementById('homeAddAdBtn');
   const storeBtn=`<a href="#" class="nav-item" id="navStore" onclick="switchPage('storePage',event);updateNav(this);"><i class="fa-solid fa-store"></i><span>المتجر</span></a>`;
-  const supportBtn=`<a href="#" class="nav-item" id="navSupport" onclick="openSupportOptions();event.preventDefault();"><i class="fa-solid fa-headset"></i><span>الدعم</span></a>`;
+  
+  // زرار الدعم شغال
+  const supportBtn=`<a href="#" class="nav-item" id="navSupport" onclick="openSupportOptions(event);"><i class="fa-solid fa-headset"></i><span>الدعم</span></a>`;
+  
   const messagesBtn=`<a href="#" class="nav-item" id="navAdminMessages" onclick="switchPage('messagesPage',event);updateNav(this);loadAdminMessagesRequests();" style="color:var(--cyan);"><i class="fa-solid fa-envelope"></i><span>الرسائل</span></a>`;
   
-  // زرار الطلبات الجديد
+  // زرار الطلبات
   const ordersBtn=`<a href="#" class="nav-item" id="navAdminOrders" onclick="switchPage('adminOrdersPage',event);updateNav(this);" style="color:#ffb703;"><i class="fa-solid fa-box"></i><span>الطلبات</span></a>`;
 
   if(!isLoggedIn){
@@ -1092,7 +1126,19 @@ function renderNav(){
 
 function updateProfileDisplay(){document.getElementById('profileUserName').innerText=currentUser.name;document.getElementById('profileUserEmail').innerText=isLoggedIn?currentUser.email:"";const m=document.getElementById('masterAdminPanel'),f=document.getElementById('adminPostFormContainer');if(isAdmin()){if(m)m.style.display="block";if(f)f.style.display="block";setupAdminPanel()}else{if(m)m.style.display="none";if(f)f.style.display="none"}}
 function getUsers(){try{return JSON.parse(localStorage.getItem('fr3on_users')||'[]')}catch(e){return[]}}
-function startSession(u){isLoggedIn=!0;loggedInEmail=u.email;currentUser={name:u.name,email:u.email,phone:u.phone||""};localStorage.setItem('fr3on_session',u.email);renderNav();updateProfileDisplay();switchPage('homePage');showNotification(`أهلاً بك مجدداً يا ${u.name} 🌟`,'success')}
+
+// إصلاح تسجيل الدخول عشان يروح للرئيسية
+function startSession(u){
+    isLoggedIn=!0;
+    loggedInEmail=u.email;
+    currentUser={name:u.name,email:u.email,phone:u.phone||""};
+    localStorage.setItem('fr3on_session',u.email);
+    switchPage('homePage'); // الروتين الأساسي: الرئيسية أولاً
+    renderNav();
+    updateProfileDisplay();
+    showNotification(`أهلاً بك مجدداً يا ${u.name} 🌟`,'success');
+}
+
 function loginSuccess(){const e=document.getElementById('loginEmailInput').value.trim().toLowerCase(),p=document.getElementById('loginPasswordInput').value;if(!e||!p){showNotification("يرجى كتابة البريد وكلمة المرور أولاً!","error");return}if(e===ADMIN_EMAIL){if(p!==ADMIN_PASSWORD){showNotification("عذراً، بيانات الدخول غير صحيحة!","error");return}startSession({name:"إدارة MAESTRO SHOP",email:ADMIN_EMAIL})}else{const u=getUsers().find(x=>x.email===e&&x.password===p);if(!u){showNotification("عذراً، بيانات الدخول غير صحيحة!","error");return}startSession(u)}document.getElementById('loginEmailInput').value='';document.getElementById('loginPasswordInput').value=''}
 function registerSuccess(){const n=document.getElementById('regNameInput').value.trim(),p=document.getElementById('regPasswordInput').value,cp=document.getElementById('regConfirmPasswordInput').value,e=document.getElementById('regEmailInput').value.trim().toLowerCase();if(!n||!e){showNotification("يرجى إكمال جميع البيانات المطلوبة!","error");return}if(p.length<6){showNotification("كلمة المرور يجب أن تكون 6 أحرف على الأقل!","error");return}if(p!==cp){showNotification("كلمتا المرور غير متطابقتين!","error");return}if(e===ADMIN_EMAIL){showNotification("هذا البريد محجوز للإدارة!","error");return}const us=getUsers();if(us.some(x=>x.email===e)){showNotification("هذا الحساب موجود بالفعل، يمكنك تسجيل الدخول.","error");return}const u={name:n,email:e,password:p};us.push(u);localStorage.setItem('fr3on_users',JSON.stringify(us));document.getElementById('regNameInput').value='';document.getElementById('regPasswordInput').value='';document.getElementById('regConfirmPasswordInput').value='';startSession(u);showNotification("تم إنشاء حسابك بنجاح! أهلاً بك 🎉")}
 function logout(){isLoggedIn=!1;loggedInEmail="";currentUser={name:"زائر MAESTRO SHOP",email:"visitor@medo.com",phone:""};localStorage.removeItem('fr3on_session');renderNav();updateProfileDisplay();switchPage('homePage');showNotification("تم تسجيل الخروج بنجاح. نراك قريباً 👋")}
@@ -1103,6 +1149,11 @@ function updateNav(el){document.querySelectorAll('.bottom-nav .nav-item').forEac
 function updateNavById(id){document.querySelectorAll('.bottom-nav .nav-item').forEach(i=>i.classList.remove('active'));const t=document.getElementById(id);if(t)t.classList.add('active')}
 
 // ============== الدوال المتبقية ==============
+function openSupportOptions(e) {
+    if(e) e.preventDefault();
+    document.getElementById('supportOptionsModal').classList.add('show');
+}
+
 const countriesList=[{name:"مصر",code:"+20",flag:"🇪🇬"},{name:"السعودية",code:"+966",flag:"🇸🇦"},{name:"الإمارات",code:"+971",flag:"🇦🇪"},{name:"العراق",code:"+964",flag:"🇮🇶"},{name:"الكويت",code:"+965",flag:"🇰🇼"},{name:"المغرب",code:"+212",flag:"🇲🇦"},{name:"الجزائر",code:"+213",flag:"🇩🇿"},{name:"الأردن",code:"+962",flag:"🇯🇴"},{name:"فلسطين",code:"+970",flag:"🇵🇸"},{name:"سوريا",code:"+963",flag:"🇸🇾"},{name:"لبنان",code:"+961",flag:"🇱🇧"},{name:"قطر",code:"+974",flag:"🇶🇦"},{name:"البحرين",code:"+973",flag:"🇧🇭"},{name:"عمان",code:"+968",flag:"🇴🇲"},{name:"اليمن",code:"+967",flag:"🇾🇪"},{name:"السودان",code:"+249",flag:"🇸🇩"},{name:"ليبيا",code:"+218",flag:"🇱🇾"},{name:"تونس",code:"+216",flag:"🇹🇳"},{name:"الولايات المتحدة",code:"+1",flag:"🇺🇸"},{name:"بريطانيا",code:"+44",flag:"🇬🇧"}];
 const currenciesList=[{name:"جنيه مصري",symbol:"EGP"},{name:"ريال سعودي",symbol:"SAR"},{name:"درهم إماراتي",symbol:"AED"},{name:"دولار أمريكي",symbol:"USD"},{name:"دينار كويتي",symbol:"KWD"},{name:"دينار أردني",symbol:"JOD"},{name:"ريال قطري",symbol:"QAR"},{name:"دينار عراقي",symbol:"IQD"},{name:"يورو",symbol:"EUR"}];
 function openCountryModal(t){activeCountryTarget=t;document.getElementById('countrySearchInput').value='';renderCountriesList(countriesList);document.getElementById('countryModal').classList.add('show')}
@@ -1175,4 +1226,4 @@ window.onload=function(){
 };
 </script>
 </body>
-</html>
+                                                                                                                                </html> 
