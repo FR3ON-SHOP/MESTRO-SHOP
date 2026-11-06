@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+<!-- إعدادات Firebase (بدون Storage عشان نستخدم ImgBB) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -484,13 +485,14 @@
 <div style="padding:15px;background:#05080c;border-top:1px solid #161b22;display:flex;align-items:center;gap:10px;"><div style="flex-grow:1;background:#090c10;border:1px solid #1c2634;border-radius:20px;padding:4px 16px;display:flex;align-items:center;"><input type="text" id="newCommentInput" placeholder="اكتب تعليقاً..." onkeypress="checkCommentEnter(event)" style="width:100%;background:transparent;border:0;outline:0;color:#fff;font-size:13.5px;padding:8px 0;" dir="rtl"></div><div onclick="submitNewComment()" style="width:42px;height:42px;background:#0b2226;border:1px solid rgba(0,245,247,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cyan);cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></div></div>
 </div>
 
-<div id="supportOptionsModal" class="support-modal-overlay" onclick="closeSupportOptions(event)">
+<!-- نافذة الدعم -->
+<div id="supportOptionsModal" class="support-modal-overlay" onclick="closeSupportModal(event)">
     <div class="support-modal-content" onclick="event.stopPropagation()">
         <div class="support-modal-header">
-            <button class="support-modal-close" onclick="closeSupportOptions()"><i class="fa-solid fa-xmark"></i></button>
+            <button class="support-modal-close" onclick="closeSupportModal(event)"><i class="fa-solid fa-xmark"></i></button>
             <h3>تواصل مع الدعم</h3>
         </div>
-        <a href="#" onclick="closeSupportOptions(); openSupportChat();" class="support-option-btn chat">
+        <a href="javascript:void(0)" onclick="closeSupportModal(event); openSupportChat();" class="support-option-btn chat">
             <i class="fa-solid fa-comments"></i>
             <div class="text-wrap">
                 <h4>الدردشة على الموقع</h4>
@@ -517,7 +519,7 @@
 <nav class="bottom-nav" id="bottomNav"></nav>
 
 <script>
-    const ADMIN_EMAIL="mestro_shop@gmail.com",ADMIN_PASSWORD="mestro_shooprmr123000";
+const ADMIN_EMAIL="mestro_shop@gmail.com",ADMIN_PASSWORD="mestro_shooprmr123000";
 const DEFAULT_LOGO="https://i.ibb.co/6P6yKq5J/logo.png",DEFAULT_STORE_NAME="MAESTRO SHOP",DEFAULT_HERO_DESC="وجهة ألعاب بلمسة نيونية، سريعة، ومهيأة لعرض الروابط والتواصل مع مجتمع MAESTRO SHOP.",DEFAULT_WARNING_TEXT="احذر النصب هذه هي الروابط والحسابات الرسمية الوحيدة<br>الخاصة بمتجر MAESTRO SHOP الإدارة غير مسؤولة عن<br>أي تعامل يتم خارج الروابط والحسابات الرسمية.";
 const defaultChannels=[{name:"قناه شحن + عرض + مسابقات",type:"WHATSAPP",desc:"قناة شحن وعروض ومسابقات 🎮",icon:"fa-whatsapp",link:"https://whatsapp.com/channel/0029VbAu2bs5PO0yXbGtBD2S"}];
 const defaultPhones=[{phone:"01032329206",label:"رقم الدعم",link:"https://wa.me/201032329206"}];
@@ -840,36 +842,7 @@ function handleCheckoutImage(e) {
         reader.readAsDataURL(file);
     }
 }
-function compressImage(base64Str, maxWidth = 800, maxHeight = 800) {
-    return new Promise((resolve) => {
-        let img = new Image();
-        img.src = base64Str;
-        img.onload = () => {
-            let canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-
-            if (width > height) {
-                if (width > maxWidth) {
-                    height *= maxWidth / width;
-                    width = maxWidth;
-                }
-            } else {
-                if (height > maxHeight) {
-                    width *= maxHeight / height;
-                    height = maxHeight;
-                }
-            }
-            canvas.width = width;
-            canvas.height = height;
-            let ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', 0.6)); // نسبة الضغط 60%
-        }
-    });
-}
-
-async function submitCheckoutOrder() {
+  async function submitCheckoutOrder() {
     const methodId = document.getElementById('method_id').style.borderColor === 'rgb(0, 245, 247)';
     const isApp = siteApps.some(a => a.key === rechargeSelectedGameKey);
     let orderDetails = "";
@@ -915,30 +888,48 @@ async function submitCheckoutOrder() {
         checkoutTransferImageBase64 = "";
         switchPage('homePage');
     } else {
-        // لو لعبة: يبعت في قاعدة بيانات Firebase
-        showNotification('جاري إرسال الطلب...', 'success');
-        const compressedImage = await compressImage(checkoutTransferImageBase64);
+        // لو لعبة: نرفع الصورة على ImgBB
+        showNotification('جاري رفع الصورة وإرسال الطلب...', 'success');
         
-        const orderText = `🎮 المنتج: ${itemName}\n📦 الباقة: ${rechargeSelectedPackage.name}\n💰 السعر: ${finalPriceToSend} ج.م\n\n${orderDetails}\n\n💳 طريقة الدفع: ${payName}\n📱 الرقم المحول منه: ${senderNumber}`;
-        
-        if (window.dbAddDoc) {
-            window.dbAddDoc(window.dbCollection(window.fsDB, "orders"), {
+        try {
+            // 1. رفع الصورة على موقع ImgBB
+            const formData = new FormData();
+            formData.append('image', checkoutTransferImageBase64.split(',')[1]); 
+            
+            // المفتاح بتاعك
+            const response = await fetch('https://api.imgbb.com/1/upload?key=a3f8cb8d0c168de1c7d70501ac38e9b8', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            
+            if (!data.success) {
+                throw new Error('فشل رفع الصورة');
+            }
+            
+            const imageUrl = data.data.url; // ده اللينك اللي هنحفظه
+
+            // 2. حفظ الطلب في الداتابيز
+            const orderText = `🎮 المنتج: ${itemName}\n📦 الباقة: ${rechargeSelectedPackage.name}\n💰 السعر: ${finalPriceToSend} ج.م\n\n${orderDetails}\n\n💳 طريقة الدفع: ${payName}\n📱 الرقم المحول منه: ${senderNumber}`;
+            
+            await window.dbAddDoc(window.dbCollection(window.fsDB, "orders"), {
                 text: orderText,
-                image: compressedImage,
+                image: imageUrl, // بنحفظ اللينك بس
                 date: new Date().toLocaleString('ar-EG'),
                 status: 'pending'
-            }).then(() => {
-                showNotification('تم إرسال الطلب للإدارة بنجاح! سيتم مراجعته قريباً. ✅');
-            }).catch(e => {
-                console.error(e);
-                showNotification('حدث خطأ في إرسال الطلب! قد تكون الصورة كبيرة.', 'error');
             });
+
+            showNotification('تم إرسال الطلب للإدارة بنجاح! ✅');
+            
+            document.getElementById('checkoutSenderNumber').value = '';
+            document.getElementById('checkoutImageName').innerHTML = 'اضغط لاختيار صورة الإثبات';
+            checkoutTransferImageBase64 = "";
+            switchPage('homePage');
+
+        } catch (error) {
+            console.error(error);
+            showNotification('حدث خطأ أثناء رفع الصورة، تأكد من الإنترنت وحاول مرة أخرى.', 'error');
         }
-        
-        document.getElementById('checkoutSenderNumber').value = '';
-        document.getElementById('checkoutImageName').innerHTML = 'اضغط لاختيار صورة الإثبات';
-        checkoutTransferImageBase64 = "";
-        switchPage('homePage');
     }
 }
 
@@ -1104,7 +1095,7 @@ function renderNav(){
   const storeBtn=`<a href="#" class="nav-item" id="navStore" onclick="switchPage('storePage',event);updateNav(this);"><i class="fa-solid fa-store"></i><span>المتجر</span></a>`;
   
   // زرار الدعم شغال
-  const supportBtn=`<a href="#" class="nav-item" id="navSupport" onclick="openSupportOptions(event);"><i class="fa-solid fa-headset"></i><span>الدعم</span></a>`;
+  const supportBtn=`<a href="javascript:void(0)" class="nav-item" id="navSupport" onclick="openSupportModal(event);"><i class="fa-solid fa-headset"></i><span>الدعم</span></a>`;
   
   const messagesBtn=`<a href="#" class="nav-item" id="navAdminMessages" onclick="switchPage('messagesPage',event);updateNav(this);loadAdminMessagesRequests();" style="color:var(--cyan);"><i class="fa-solid fa-envelope"></i><span>الرسائل</span></a>`;
   
@@ -1127,7 +1118,6 @@ function renderNav(){
 function updateProfileDisplay(){document.getElementById('profileUserName').innerText=currentUser.name;document.getElementById('profileUserEmail').innerText=isLoggedIn?currentUser.email:"";const m=document.getElementById('masterAdminPanel'),f=document.getElementById('adminPostFormContainer');if(isAdmin()){if(m)m.style.display="block";if(f)f.style.display="block";setupAdminPanel()}else{if(m)m.style.display="none";if(f)f.style.display="none"}}
 function getUsers(){try{return JSON.parse(localStorage.getItem('fr3on_users')||'[]')}catch(e){return[]}}
 
-// إصلاح تسجيل الدخول عشان يروح للرئيسية
 function startSession(u){
     isLoggedIn=!0;
     loggedInEmail=u.email;
@@ -1148,12 +1138,29 @@ function openChannelFromFloating(e){if(e)e.preventDefault();document.querySelect
 function updateNav(el){document.querySelectorAll('.bottom-nav .nav-item').forEach(i=>i.classList.remove('active'));el.classList.add('active')}
 function updateNavById(id){document.querySelectorAll('.bottom-nav .nav-item').forEach(i=>i.classList.remove('active'));const t=document.getElementById(id);if(t)t.classList.add('active')}
 
-// ============== الدوال المتبقية ==============
-function openSupportOptions(e) {
+// ============== دوال الدعم ==============
+function openSupportModal(e) {
     if(e) e.preventDefault();
     document.getElementById('supportOptionsModal').classList.add('show');
 }
 
+function closeSupportModal(e) {
+    if(e) e.preventDefault();
+    document.getElementById('supportOptionsModal').classList.remove('show');
+}
+
+function openSupportChat() {
+    document.getElementById('supportChatModal').style.display = 'flex';
+    document.getElementById('chatHeaderTitle').innerText = "إدارة MAESTRO SHOP (الدعم المباشر)";
+    loadChatMessages();
+}
+
+function closeSupportChat() {
+    document.getElementById('supportChatModal').style.display = 'none';
+    loadAdminMessagesRequests(); // تحديث القائمة لو الأدمن
+}
+
+// ============== الدوال المتبقية ==============
 const countriesList=[{name:"مصر",code:"+20",flag:"🇪🇬"},{name:"السعودية",code:"+966",flag:"🇸🇦"},{name:"الإمارات",code:"+971",flag:"🇦🇪"},{name:"العراق",code:"+964",flag:"🇮🇶"},{name:"الكويت",code:"+965",flag:"🇰🇼"},{name:"المغرب",code:"+212",flag:"🇲🇦"},{name:"الجزائر",code:"+213",flag:"🇩🇿"},{name:"الأردن",code:"+962",flag:"🇯🇴"},{name:"فلسطين",code:"+970",flag:"🇵🇸"},{name:"سوريا",code:"+963",flag:"🇸🇾"},{name:"لبنان",code:"+961",flag:"🇱🇧"},{name:"قطر",code:"+974",flag:"🇶🇦"},{name:"البحرين",code:"+973",flag:"🇧🇭"},{name:"عمان",code:"+968",flag:"🇴🇲"},{name:"اليمن",code:"+967",flag:"🇾🇪"},{name:"السودان",code:"+249",flag:"🇸🇩"},{name:"ليبيا",code:"+218",flag:"🇱🇾"},{name:"تونس",code:"+216",flag:"🇹🇳"},{name:"الولايات المتحدة",code:"+1",flag:"🇺🇸"},{name:"بريطانيا",code:"+44",flag:"🇬🇧"}];
 const currenciesList=[{name:"جنيه مصري",symbol:"EGP"},{name:"ريال سعودي",symbol:"SAR"},{name:"درهم إماراتي",symbol:"AED"},{name:"دولار أمريكي",symbol:"USD"},{name:"دينار كويتي",symbol:"KWD"},{name:"دينار أردني",symbol:"JOD"},{name:"ريال قطري",symbol:"QAR"},{name:"دينار عراقي",symbol:"IQD"},{name:"يورو",symbol:"EUR"}];
 function openCountryModal(t){activeCountryTarget=t;document.getElementById('countrySearchInput').value='';renderCountriesList(countriesList);document.getElementById('countryModal').classList.add('show')}
@@ -1188,8 +1195,26 @@ function rejectPost(i){if(!isAdmin())return;let p=JSON.parse(localStorage.getIte
 function loadAllPosts(){const c=document.getElementById('allPostsContainer');let p=JSON.parse(localStorage.getItem('fr3on_all_posts')||'[]'),cat=document.getElementById('filterSelectedCategoryText').innerText,si=document.getElementById('searchPostsInput'),q=si?si.value.trim().toLowerCase():'';if(cat&&cat!=='الكل'){p=p.filter(x=>x.category===cat)}if(q){p=p.filter(x=>(x.title||'').toLowerCase().includes(q)||(x.desc||'').toLowerCase().includes(q))}c.innerHTML=p.length===0?'<p style="color:#8b949e;text-align:center;padding:20px;">لا توجد منشورات في هذا القسم.</p>':'';p.forEach(post=>{let im=post.img?`<img src="${post.img}" onclick="openLightBox('${post.img}')" style="width:100%;max-height:250px;object-fit:cover;border-radius:10px;margin-bottom:10px;cursor:pointer;border:1px solid #1c2634;">`:'';c.innerHTML+=`<div style="background:#090c10;border:1px solid #1c2634;border-radius:20px;padding:20px;margin-bottom:15px;"><div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid #162230;padding-bottom:10px;"><div style="color:#fff;font-weight:bold;font-size:14px;"><i class="fa-solid fa-user" style="color:var(--cyan);"></i> ${post.author||'مستخدم'}</div><div style="color:#8b949e;font-size:11px;">${post.date||''}</div></div>${im}<h3 style="color:#fff;font-size:16px;margin-bottom:8px;">${post.title}</h3><p style="color:var(--cyan);font-weight:bold;margin-bottom:8px;">${post.price}</p><p style="color:#8b949e;font-size:13px;line-height:1.6;">${post.desc}</p></div>`})}
 function filterUserPosts(){loadAllPosts()}
 function getTargetChatKey(){if(isAdmin()&&adminActiveChatKey)return adminActiveChatKey;let i=isLoggedIn?loggedInEmail:("visitor_"+(localStorage.getItem('fr3on_visitor_id')||Math.random().toString(36).substring(7)));if(!isLoggedIn&&!localStorage.getItem('fr3on_visitor_id'))localStorage.setItem('fr3on_visitor_id',i.replace('visitor_',''));return 'fr3on_chat_'+i}
-function openSupportChat(k=null){const m=document.getElementById('supportChatModal');m.style.display='flex';if(isAdmin()&&k){adminActiveChatKey=k;document.getElementById('chatHeaderTitle').innerText="محادثة مع: "+k.replace('fr3on_chat_','')}else{adminActiveChatKey="";document.getElementById('chatHeaderTitle').innerText="إدارة MAESTRO SHOP (الدعم المباشر)"}loadChatMessages()}
-function closeSupportChat(){document.getElementById('supportChatModal').style.display='none';adminActiveChatKey="";loadAdminMessagesRequests()}
+
+function openSupportChat(k=null){
+    const m=document.getElementById('supportChatModal');
+    m.style.display='flex';
+    if(isAdmin()&&k){
+        adminActiveChatKey=k;
+        document.getElementById('chatHeaderTitle').innerText="محادثة مع: "+k.replace('fr3on_chat_','');
+    }else{
+        adminActiveChatKey="";
+        document.getElementById('chatHeaderTitle').innerText="إدارة MAESTRO SHOP (الدعم المباشر)";
+    }
+    loadChatMessages();
+}
+
+function closeSupportChat(){
+    document.getElementById('supportChatModal').style.display='none';
+    adminActiveChatKey="";
+    loadAdminMessagesRequests();
+}
+
 function loadChatMessages(){const c=document.getElementById('chatMessagesContainer');let k=getTargetChatKey(),m=JSON.parse(localStorage.getItem(k)||'[]');if(m.length===0&&!isAdmin()){m=[{sender:'admin',text:'أهلاً بك في MAESTRO SHOP! كيف يمكننا مساعدتك اليوم؟',time:new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}),type:'text'}];localStorage.setItem(k,JSON.stringify(m))}c.innerHTML='';m.forEach((msg,i)=>{let isMe=(isAdmin()&&adminActiveChatKey)?(msg.sender==='admin'):(msg.sender==='user'),bg=isMe?'#032123':'#161b22',as=isMe?'flex-end':'flex-start',rs=isMe?'16px 16px 16px 0':'16px 16px 0 16px',ch=msg.isDeleted?`<div style="color:#8b949e;font-style:italic;font-size:13px;"><i class="fa-solid fa-ban"></i> تم حذف هذه الرسالة</div>`:(msg.type==='img'?`<img src="${msg.text}" style="max-width:100%;border-radius:10px;margin-bottom:5px;">`:msg.text),rb=msg.reaction?`<div style="position:absolute;bottom:-10px;${isMe?'right':'left'}:10px;background:#161b22;border:1px solid #30363d;border-radius:12px;padding:2px 6px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,0.5);">${msg.reaction}</div>`:'';c.innerHTML+=`<div style="display:flex;flex-direction:column;align-items:${as};max-width:80%;align-self:${as};position:relative;margin-bottom:10px;"><div onclick="toggleMessageMenu(event,${i})" style="background:${bg};border:1px solid #008e95;border-radius:${rs};padding:12px 16px;color:#fff;font-size:13.5px;line-height:1.5;word-break:break-all;cursor:pointer;position:relative;">${ch} ${rb}</div><div style="color:#8b949e;font-size:10px;margin-top:4px;">${msg.time}</div></div>`});c.scrollTop=c.scrollHeight}
 function toggleMessageMenu(e,i){e.stopPropagation();let ex=document.getElementById('chatMsgActionMenu');if(ex)ex.remove();let m=document.createElement('div');m.id='chatMsgActionMenu';m.style.cssText="position:absolute;background:#0b1018;border:1px solid #008e95;border-radius:30px;padding:6px 12px;display:flex;gap:12px;align-items:center;z-index:6000;box-shadow:0 4px 20px rgba(0,0,0,0.8);font-size:18px;";m.innerHTML=`<span onclick="setMsgReaction(${i},'❤️')" style="cursor:pointer;">❤️</span><span onclick="setMsgReaction(${i},'🔥')" style="cursor:pointer;">🔥</span><span onclick="setMsgReaction(${i},'👍')" style="cursor:pointer;">👍</span><span onclick="setMsgReaction(${i},'😂')" style="cursor:pointer;">😂</span><span onclick="setMsgReaction(${i},'😮')" style="cursor:pointer;">😮</span><span onclick="deleteChatMessage(${i})" style="color:#ff4d4d;font-size:14px;cursor:pointer;margin-right:5px;" title="حذف"><i class="fa-solid fa-trash"></i></span>`;let r=e.currentTarget.getBoundingClientRect();document.body.appendChild(m);m.style.top=(r.top-50)+'px';m.style.left=Math.max(10,r.left)+'px';document.addEventListener('click',function rm(){m.remove();document.removeEventListener('click',rm)},{once:true})}
 function setMsgReaction(i,e){let k=getTargetChatKey(),m=JSON.parse(localStorage.getItem(k)||'[]');m[i].reaction=e;localStorage.setItem(k,JSON.stringify(m));loadChatMessages()}
@@ -1226,4 +1251,4 @@ window.onload=function(){
 };
 </script>
 </body>
-                                                                                                                                </html> 
+                                                                                                                              </html> 
